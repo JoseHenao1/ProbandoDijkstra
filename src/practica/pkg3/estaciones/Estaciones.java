@@ -17,11 +17,12 @@ public class Estaciones extends javax.swing.JFrame {
     /**
      * Creates new form Estaciones
      */
-    private String clave = "admin"; //{'a','d','m','i','n'};
+    private String clave = "admin";
     private String usuarios = "admin";
     
     public Estaciones() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /*public char[] getClave() {
@@ -86,6 +87,8 @@ public class Estaciones extends javax.swing.JFrame {
         textuser = new javax.swing.JTextField();
         textpass = new javax.swing.JPasswordField();
         BInicio = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        errorPass = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -269,17 +272,22 @@ public class Estaciones extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 643, Short.MAX_VALUE)
+            .addGap(0, 696, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 499, Short.MAX_VALUE)
+            .addGap(0, 504, Short.MAX_VALUE)
         );
 
         administrar.addTab("Grafica", jPanel5);
 
         Bcarga.setText("Cargar Estciones");
         Bcarga.setEnabled(false);
+        Bcarga.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BcargaMouseClicked(evt);
+            }
+        });
 
         Bedit.setText("Editar Credenciales");
         Bedit.setEnabled(false);
@@ -304,6 +312,12 @@ public class Estaciones extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel9.setText("Clave:");
 
+        textpass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textpassActionPerformed(evt);
+            }
+        });
+
         BInicio.setText("Iniciar");
         BInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,58 +325,74 @@ public class Estaciones extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
+
+        errorPass.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(Bedit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Bcarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(370, 370, 370)
+                                .addComponent(jLabel9))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGap(354, 354, 354)
+                                .addComponent(jLabel8)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textuser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textpass)
-                            .addComponent(BInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))))
-                .addContainerGap(120, Short.MAX_VALUE))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textuser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textpass, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Bcarga, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(Bedit)
+                                .addGap(250, 250, 250)
+                                .addComponent(jLabel11))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(322, 322, 322)
+                                .addComponent(errorPass, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(211, 211, 211)
+                                .addComponent(BInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(Bcarga)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Bedit)
-                .addGap(82, 82, 82)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Bedit)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel11)))
+                .addGap(23, 23, 23)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(textuser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(textpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(BInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(3, 3, 3)
+                        .addComponent(errorPass, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         administrar.addTab("Administrar", jPanel6);
@@ -408,28 +438,40 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_administrarMouseClicked
 
     private void BInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BInicioActionPerformed
-        
+        String messErr;
         try {
             String user = textuser.getText();
             char[] pass = textpass.getPassword();
             
-               if(user.equals(usuarios)){
-               if(clave.equals(Arrays.toString(pass))){
-                 Bcarga.setEnabled(true);
-                 Bedit.setEnabled(true);
-               }else{
-                JOptionPane.showMessageDialog(null,"no entramos hp ");
-               }
-             
-             }
+            if (user.equals(usuarios)) {
+                if (clave.equals(String.valueOf(pass))) {
+                    Bcarga.setEnabled(true);
+                    Bedit.setEnabled(true);
+                } else {
+                    messErr="Contraseña Incorrecta";
+                    errorPass.setText(messErr);
+                }
+                
+            }else{
+                messErr="Usuario Incorrecto";
+                errorPass.setText(messErr);
+            }
             
         } catch (Exception e) {
         }
-         textuser.setText("");
-         textpass.setText("");
+        textuser.setText("");
+        textpass.setText("");
         
      
     }//GEN-LAST:event_BInicioActionPerformed
+
+    private void BcargaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BcargaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BcargaMouseClicked
+
+    private void textpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textpassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textpassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -473,9 +515,11 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JTabbedPane administrar;
     private javax.swing.JTextArea areaListaE;
     private javax.swing.JTextArea areaRuta;
+    private javax.swing.JLabel errorPass;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
