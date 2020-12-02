@@ -5,8 +5,12 @@
  */
 package practica.pkg3.estaciones;
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.Arrays;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -25,18 +29,15 @@ public class Estaciones extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    /*public char[] getClave() {
+    public String getClave() {
         return clave;
     }
 
-    public void setClave(char[] clave) {
+    public void setClave(String clave) {
         this.clave = clave;
-    }*/
-
-   
+    }
 
   
-
     public String getUsuarios() {
         return usuarios;
     }
@@ -281,11 +282,16 @@ public class Estaciones extends javax.swing.JFrame {
 
         administrar.addTab("Grafica", jPanel5);
 
-        Bcarga.setText("Cargar Estciones");
+        Bcarga.setText("Cargar Estaciones");
         Bcarga.setEnabled(false);
         Bcarga.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BcargaMouseClicked(evt);
+            }
+        });
+        Bcarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BcargaActionPerformed(evt);
             }
         });
 
@@ -350,11 +356,6 @@ public class Estaciones extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Bcarga, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(Bedit)
-                                .addGap(250, 250, 250)
-                                .addComponent(jLabel11))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(322, 322, 322)
@@ -362,7 +363,13 @@ public class Estaciones extends javax.swing.JFrame {
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(211, 211, 211)
-                                .addComponent(BInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(BInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(Bedit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Bcarga, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
+                                .addGap(234, 234, 234)
+                                .addComponent(jLabel11)))))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -424,7 +431,10 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BeditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BeditActionPerformed
-        // TODO add your handling code here:
+        setUsuarios(JOptionPane.showInputDialog(null, "Ingrese el nuevo usuario"));
+        setClave(JOptionPane.showInputDialog(null, "Ingrese la nueva clave"));
+        Bedit.setEnabled(false);
+        Bcarga.setEnabled(false);
     }//GEN-LAST:event_BeditActionPerformed
 
     private void textConfirmacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textConfirmacionActionPerformed
@@ -472,6 +482,29 @@ public class Estaciones extends javax.swing.JFrame {
     private void textpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textpassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textpassActionPerformed
+
+    private void BcargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcargaActionPerformed
+       JFileChooser buscar = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("TXT","txt");
+        buscar.setFileFilter(filtro);
+       int selecion = buscar.showOpenDialog(this);
+       
+        if(selecion == JFileChooser.APPROVE_OPTION){
+          File archivo = buscar.getSelectedFile();
+            try (FileReader fr = new FileReader(archivo)){
+                String cadena = "";
+                int linea = fr.read();
+                while(linea != -1){
+                    cadena += (char) linea;
+                    linea = fr.read();
+                 }
+                this.textConfirmacion.setText(cadena);
+            } catch (Exception e) {
+            }
+        }
+        Bedit.setEnabled(false);
+        Bcarga.setEnabled(false);
+    }//GEN-LAST:event_BcargaActionPerformed
 
     /**
      * @param args the command line arguments

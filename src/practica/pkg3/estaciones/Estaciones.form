@@ -381,12 +381,6 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="19" pref="19" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Bcarga" min="-2" pref="141" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="Bedit" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="250" pref="250" max="-2" attributes="0"/>
-                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="322" pref="322" max="-2" attributes="0"/>
@@ -396,6 +390,14 @@
                                       <Component id="textConfirmacion" min="-2" pref="200" max="-2" attributes="0"/>
                                       <EmptySpace min="211" pref="211" max="-2" attributes="0"/>
                                       <Component id="BInicio" min="-2" pref="102" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="Bedit" max="32767" attributes="0"/>
+                                          <Component id="Bcarga" pref="141" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="234" max="-2" attributes="0"/>
+                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -446,11 +448,12 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="Bcarga">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cargar Estciones"/>
+                <Property name="text" type="java.lang.String" value="Cargar Estaciones"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BcargaMouseClicked"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BcargaActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="Bedit">
