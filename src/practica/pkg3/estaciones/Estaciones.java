@@ -5,18 +5,45 @@
  */
 package practica.pkg3.estaciones;
 
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author juana
+ * @author Jhosepe
  */
 public class Estaciones extends javax.swing.JFrame {
 
     /**
      * Creates new form Estaciones
      */
+    private String clave = "admin"; //{'a','d','m','i','n'};
+    private String usuarios = "admin";
+    
     public Estaciones() {
         initComponents();
     }
+
+    /*public char[] getClave() {
+        return clave;
+    }
+
+    public void setClave(char[] clave) {
+        this.clave = clave;
+    }*/
+
+   
+
+  
+
+    public String getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(String usuarios) {
+        this.usuarios = usuarios;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,7 +57,7 @@ public class Estaciones extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        administrar = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -50,10 +77,15 @@ public class Estaciones extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        Bcarga = new javax.swing.JButton();
+        Bedit = new javax.swing.JButton();
         textConfirmacion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        textuser = new javax.swing.JTextField();
+        textpass = new javax.swing.JPasswordField();
+        BInicio = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -89,6 +121,12 @@ public class Estaciones extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        administrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                administrarMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Yu Mincho Demibold", 1, 24)); // NOI18N
         jLabel1.setText("Metro UdeA");
@@ -225,7 +263,7 @@ public class Estaciones extends javax.swing.JFrame {
                 .addContainerGap(143, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Ruta Metro", jPanel1);
+        administrar.addTab("Ruta Metro", jPanel1);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -238,14 +276,16 @@ public class Estaciones extends javax.swing.JFrame {
             .addGap(0, 499, Short.MAX_VALUE)
         );
 
-        jTabbedPane2.addTab("Grafica", jPanel5);
+        administrar.addTab("Grafica", jPanel5);
 
-        jButton3.setText("Cargar Estciones");
+        Bcarga.setText("Cargar Estciones");
+        Bcarga.setEnabled(false);
 
-        jButton4.setText("Editar Credenciales");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Bedit.setText("Editar Credenciales");
+        Bedit.setEnabled(false);
+        Bedit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                BeditActionPerformed(evt);
             }
         });
 
@@ -258,6 +298,19 @@ public class Estaciones extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setText("Confirmación:");
 
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel8.setText("Usuario: ");
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel9.setText("Clave:");
+
+        BInicio.setText("Iniciar");
+        BInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BInicioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -268,35 +321,61 @@ public class Estaciones extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(424, Short.MAX_VALUE))
+                        .addComponent(Bedit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Bcarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textuser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textpass)
+                            .addComponent(BInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jButton3)
+                .addComponent(Bcarga)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addComponent(Bedit)
+                .addGap(82, 82, 82)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(textuser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(textpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(BInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
-        jTabbedPane2.addTab("Administrar", jPanel6);
+        administrar.addTab("Administrar", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(administrar)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(administrar)
         );
 
         pack();
@@ -314,13 +393,43 @@ public class Estaciones extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void BeditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BeditActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_BeditActionPerformed
 
     private void textConfirmacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textConfirmacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textConfirmacionActionPerformed
+
+    private void administrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_administrarMouseClicked
+       // aqui vamos a poner la validacion de usuario
+   
+       
+    }//GEN-LAST:event_administrarMouseClicked
+
+    private void BInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BInicioActionPerformed
+        
+        try {
+            String user = textuser.getText();
+            char[] pass = textpass.getPassword();
+            
+               if(user.equals(usuarios)){
+               if(clave.equals(Arrays.toString(pass))){
+                 Bcarga.setEnabled(true);
+                 Bedit.setEnabled(true);
+               }else{
+                JOptionPane.showMessageDialog(null,"no entramos hp ");
+               }
+             
+             }
+            
+        } catch (Exception e) {
+        }
+         textuser.setText("");
+         textpass.setText("");
+        
+     
+    }//GEN-LAST:event_BInicioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,12 +467,14 @@ public class Estaciones extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BInicio;
+    private javax.swing.JButton Bcarga;
+    private javax.swing.JButton Bedit;
+    private javax.swing.JTabbedPane administrar;
     private javax.swing.JTextArea areaListaE;
     private javax.swing.JTextArea areaRuta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -371,6 +482,8 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -380,10 +493,11 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField textConfirmacion;
     private javax.swing.JTextField textDestino;
     private javax.swing.JTextField textSalida;
+    private javax.swing.JPasswordField textpass;
+    private javax.swing.JTextField textuser;
     // End of variables declaration//GEN-END:variables
 }
