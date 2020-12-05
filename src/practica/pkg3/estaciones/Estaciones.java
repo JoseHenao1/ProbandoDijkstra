@@ -8,8 +8,12 @@ package practica.pkg3.estaciones;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -23,10 +27,15 @@ public class Estaciones extends javax.swing.JFrame {
      */
     private String clave = "admin";
     private String usuarios = "admin";
+    private int [][] matCostos;
+    private String[] estaciones;
+    public int [][] matTemp;
+    public String[] estTemp;
     
     public Estaciones() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
 
     public String getClave() {
@@ -45,7 +54,139 @@ public class Estaciones extends javax.swing.JFrame {
     public void setUsuarios(String usuarios) {
         this.usuarios = usuarios;
     }
+
+    public int[][] getMatCostos() {
+        return matCostos;
+    }
+
+    public void setMatCostos(int[][] matCostos) {
+        this.matCostos = matCostos;
+    }
+
+    public String[] getEstaciones() {
+        return estaciones;
+    }
+
+    public void setEstaciones(String[] estaciones) {
+        this.estaciones = estaciones;
+    }
+
+    public int[][] getMatTemp() {
+        return matTemp;
+    }
+
+    public void setMatTemp(int[][] matTemp) {
+        this.matTemp = matTemp;
+    }
+
+    public String[] getEstTemp() {
+        return estTemp;
+    }
+
+    public void setEstTemp(String[] estTemp) {
+        this.estTemp = estTemp;
+    }
     
+    
+    public void CrearMatCostosyVecEstaciones(String entrada){
+        int estaTemp;
+        String nEsta;
+        int apuntador=0;
+        int fila=0;
+        int columna=0;
+        int [][] mat;
+        String[] lineas = entrada.split("\n");
+        nEsta = lineas[0].trim();
+        JOptionPane.showMessageDialog(null,nEsta);
+        JOptionPane.showMessageDialog(null,MostrarEstaciones(lineas));
+        String[] estacionesT;
+        String[] separador;
+        String eTemporal;
+       
+     
+        
+        estaTemp = Integer.parseInt(nEsta);
+        JOptionPane.showMessageDialog(null," "+estaTemp);
+        mat=new int[estaTemp][estaTemp];
+        estacionesT = new String[estaTemp];
+        
+        //inicializamos estacionesT
+        for (int i = 0; i < estaTemp; i++) {
+            estacionesT[i]="";
+         }
+        
+        
+        //craremos el vector para almacenar las estaTemp
+         for (int i = 1; i < lineas.length; i++) {
+             boolean esta=true;
+             separador = lineas[i].split(",");
+               for (int j = 0; j < 2; j++) {
+                  eTemporal = separador[j];
+                  JOptionPane.showMessageDialog(null,MostrarEstaciones(estacionesT));
+                   for (int k = 0; k < estaTemp; k++) {
+                       if(eTemporal.equalsIgnoreCase(estacionesT[k])){
+                           esta = false;
+                           break;
+                       }
+                    }
+                   if(esta){
+                       if(apuntador<estaTemp){
+                            estacionesT[apuntador]=eTemporal;
+                            apuntador++;
+                          
+                       }
+                     
+                   }
+                   
+                  
+             }
+            
+        }
+         
+         //crearemos la matriz de costos
+         
+        
+        for (int b = 1; b < lineas.length; b++) {
+            separador = lineas[b].split(",");
+                for (int j = 0; j < estaTemp; j++) {
+                    if(separador[0].equals(estacionesT[j])){
+                      fila = j;
+                    }
+                     if(separador[1].equals(estacionesT[j])){
+                      columna = j;
+                    }
+                }
+            JOptionPane.showMessageDialog(null," "+fila+" "+columna);
+            mat[fila][columna]=Integer.parseInt(separador[2].trim());
+            mat[columna][fila]=Integer.parseInt(separador[2].trim());
+            
+        }
+        setMatTemp(mat);
+        setEstTemp(estacionesT);
+        
+          
+        
+    }
+    
+    public String MostarMat(int [][] matriz){
+          String salida = "";
+           for (int i = 0; i < matriz.length; i++) {
+               for (int j = 0; j < matriz.length; j++) {
+                   salida += matriz[i][j]+"\t";
+               }
+               salida += "\n";
+                           
+           }
+          return salida;
+    }
+    public String MostrarEstaciones(String [] e){
+        String salida = "";
+            for (int i = 0 ; i < e.length ;i++)  {
+                salida += (i+1)+". "+ e[i]+"\t\n";
+        }
+        return salida;
+    }
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,7 +201,7 @@ public class Estaciones extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         administrar = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        panelRuta = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -69,27 +210,40 @@ public class Estaciones extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         areaListaE = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        bClear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         areaRuta = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textDistancia = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jButton2 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        icono = new javax.swing.JLabel();
+        PanelGrafica = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        areamatriz = new javax.swing.JTextArea();
+        jButton4 = new javax.swing.JButton();
+        Administracion = new javax.swing.JPanel();
         Bcarga = new javax.swing.JButton();
         Bedit = new javax.swing.JButton();
-        textConfirmacion = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         textuser = new javax.swing.JTextField();
         textpass = new javax.swing.JPasswordField();
-        BInicio = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         errorPass = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textConfirmacion = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        Bcancelar = new javax.swing.JButton();
+        Bok = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        BInicio = new javax.swing.JButton();
+        BcerrarS = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -132,158 +286,145 @@ public class Estaciones extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Yu Mincho Demibold", 1, 24)); // NOI18N
+        panelRuta.setBackground(new java.awt.Color(255, 255, 255));
+        panelRuta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Yu Mincho Demibold", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 51));
         jLabel1.setText("Metro UdeA");
+        panelRuta.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel2.setText("Estacion de partida:");
+        panelRuta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel3.setText("Estacion de destino:");
+        panelRuta.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        textSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textSalidaActionPerformed(evt);
+            }
+        });
+        panelRuta.add(textSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 130, -1));
+        panelRuta.add(textDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 130, -1));
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("Listado de Estaciones");
+        panelRuta.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, -1, -1));
 
         areaListaE.setEditable(false);
         areaListaE.setColumns(20);
         areaListaE.setRows(5);
         jScrollPane1.setViewportView(areaListaE);
 
-        jButton1.setText("Calcular Ruta");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        panelRuta.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(436, 70, 290, 150));
+
+        bClear.setBackground(new java.awt.Color(0, 102, 0));
+        bClear.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        bClear.setText("Limpiar");
+        bClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bClearActionPerformed(evt);
             }
         });
+        panelRuta.add(bClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 480, 130, 40));
 
         areaRuta.setColumns(20);
         areaRuta.setFont(new java.awt.Font("Kalinga", 1, 24)); // NOI18N
         areaRuta.setRows(5);
         jScrollPane2.setViewportView(areaRuta);
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        panelRuta.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 500, 120));
+
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel5.setText("La mejor ruta para llegar a su destino es: ");
+        panelRuta.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel6.setText("Distancia a recorrer: ");
+        panelRuta.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 300, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        textDistancia.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        textDistancia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                textDistanciaActionPerformed(evt);
             }
         });
+        panelRuta.add(textDistancia, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, 150, 120));
 
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        panelRuta.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 660, 10));
+
+        jButton2.setBackground(new java.awt.Color(0, 102, 0));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("Ver Estaciones");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        panelRuta.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 120, 40));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel1))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(27, 27, 27)
-                            .addComponent(jLabel2))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(88, 88, 88))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jTextField1))
-                .addGap(57, 57, 57))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(90, 90, 90))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addGap(81, 81, 81))))
+        jButton3.setBackground(new java.awt.Color(0, 102, 0));
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton3.setText("Calcular Ruta");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        panelRuta.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 130, 40));
+
+        icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/metro.png"))); // NOI18N
+        panelRuta.add(icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        administrar.addTab("Ruta Metro", panelRuta);
+
+        areamatriz.setColumns(20);
+        areamatriz.setRows(5);
+        jScrollPane4.setViewportView(areamatriz);
+
+        jButton4.setText("ver Matriz");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PanelGraficaLayout = new javax.swing.GroupLayout(PanelGrafica);
+        PanelGrafica.setLayout(PanelGraficaLayout);
+        PanelGraficaLayout.setHorizontalGroup(
+            PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelGraficaLayout.createSequentialGroup()
+                .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelGraficaLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelGraficaLayout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jButton4)))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        PanelGraficaLayout.setVerticalGroup(
+            PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelGraficaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(textSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(textDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jButton4)
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
-        administrar.addTab("Ruta Metro", jPanel1);
+        administrar.addTab("Grafica", PanelGrafica);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 696, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 504, Short.MAX_VALUE)
-        );
+        Administracion.setBackground(new java.awt.Color(255, 255, 255));
+        Administracion.setFocusable(false);
+        Administracion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        administrar.addTab("Grafica", jPanel5);
-
+        Bcarga.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Bcarga.setText("Cargar Estaciones");
-        Bcarga.setEnabled(false);
         Bcarga.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BcargaMouseClicked(evt);
@@ -294,7 +435,9 @@ public class Estaciones extends javax.swing.JFrame {
                 BcargaActionPerformed(evt);
             }
         });
+        Administracion.add(Bcarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 141, -1));
 
+        Bedit.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Bedit.setText("Editar Credenciales");
         Bedit.setEnabled(false);
         Bedit.addActionListener(new java.awt.event.ActionListener() {
@@ -302,107 +445,133 @@ public class Estaciones extends javax.swing.JFrame {
                 BeditActionPerformed(evt);
             }
         });
-
-        textConfirmacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textConfirmacionActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel7.setText("Confirmación:");
+        Administracion.add(Bedit, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 141, -1));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel8.setText("Usuario: ");
+        Administracion.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 246, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel9.setText("Clave:");
+        Administracion.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, -1, -1));
+        Administracion.add(textuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(429, 249, 100, -1));
 
         textpass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textpassActionPerformed(evt);
             }
         });
+        Administracion.add(textpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(429, 293, 100, -1));
 
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
+        Administracion.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(411, 77, -1, -1));
+
+        errorPass.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        Administracion.add(errorPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 330, 181, 20));
+
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        Administracion.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 10, 437));
+
+        textConfirmacion.setColumns(20);
+        textConfirmacion.setRows(5);
+        jScrollPane3.setViewportView(textConfirmacion);
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel7.setText("Confirmación:");
+
+        Bcancelar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Bcancelar.setText("Cancelar");
+        Bcancelar.setEnabled(false);
+        Bcancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BcancelarActionPerformed(evt);
+            }
+        });
+
+        Bok.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        Bok.setText("Ok");
+        Bok.setEnabled(false);
+        Bok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BokActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator3)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 9, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(Bok)
+                                .addGap(18, 18, 18)
+                                .addComponent(Bcancelar))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 59, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(181, Short.MAX_VALUE)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Bcancelar)
+                    .addComponent(Bok))
+                .addGap(41, 41, 41))
+        );
+
+        Administracion.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, 520));
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon soporte3.png"))); // NOI18N
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        Administracion.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 450, -1, -1));
+
+        BInicio.setBackground(new java.awt.Color(255, 255, 255));
+        BInicio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         BInicio.setText("Iniciar");
         BInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BInicioActionPerformed(evt);
             }
         });
+        Administracion.add(BInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 100, 34));
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user.png"))); // NOI18N
+        BcerrarS.setBackground(new java.awt.Color(255, 255, 255));
+        BcerrarS.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        BcerrarS.setText("Cerrar Sesión");
+        BcerrarS.setEnabled(false);
+        BcerrarS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BcerrarSActionPerformed(evt);
+            }
+        });
+        Administracion.add(BcerrarS, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, -1, 34));
 
-        errorPass.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(370, 370, 370)
-                                .addComponent(jLabel9))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(354, 354, 354)
-                                .addComponent(jLabel8)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textuser, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textpass, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(322, 322, 322)
-                                .addComponent(errorPass, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(211, 211, 211)
-                                .addComponent(BInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(Bedit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Bcarga, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
-                                .addGap(234, 234, 234)
-                                .addComponent(jLabel11)))))
-                .addContainerGap(85, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(Bcarga)
-                .addGap(12, 12, 12)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Bedit)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel11)))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(textuser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(textpass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(errorPass, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textConfirmacion, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-
-        administrar.addTab("Administrar", jPanel6);
+        administrar.addTab("Administrar", Administracion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -412,22 +581,31 @@ public class Estaciones extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(administrar)
+            .addComponent(administrar, javax.swing.GroupLayout.PREFERRED_SIZE, 558, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void bClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClearActionPerformed
+        textDestino.setText("");
+        textSalida.setText("");
+        areaListaE.setText("");
+        areaRuta.setText("");
+        textDistancia.setText("");
+        
+    }//GEN-LAST:event_bClearActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void textDistanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textDistanciaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_textDistanciaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+       if(getEstaciones() != null){
+           areaListaE.setText(MostrarEstaciones(estaciones));
+       }else{
+           areaListaE.setText("Favor solicite al administrador cargar las estaciones.\t\n gracias");
+       }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BeditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BeditActionPerformed
@@ -436,10 +614,6 @@ public class Estaciones extends javax.swing.JFrame {
         Bedit.setEnabled(false);
         Bcarga.setEnabled(false);
     }//GEN-LAST:event_BeditActionPerformed
-
-    private void textConfirmacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textConfirmacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textConfirmacionActionPerformed
 
     private void administrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_administrarMouseClicked
        // aqui vamos a poner la validacion de usuario
@@ -457,6 +631,7 @@ public class Estaciones extends javax.swing.JFrame {
                 if (clave.equals(String.valueOf(pass))) {
                     Bcarga.setEnabled(true);
                     Bedit.setEnabled(true);
+                    BcerrarS.setEnabled(true);
                 } else {
                     messErr="Contraseña Incorrecta";
                     errorPass.setText(messErr);
@@ -487,24 +662,80 @@ public class Estaciones extends javax.swing.JFrame {
        JFileChooser buscar = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("TXT","txt");
         buscar.setFileFilter(filtro);
+        String cadena = "";
        int selecion = buscar.showOpenDialog(this);
        
         if(selecion == JFileChooser.APPROVE_OPTION){
           File archivo = buscar.getSelectedFile();
             try (FileReader fr = new FileReader(archivo)){
-                String cadena = "";
+                
                 int linea = fr.read();
                 while(linea != -1){
                     cadena += (char) linea;
                     linea = fr.read();
                  }
-                this.textConfirmacion.setText(cadena);
+                //this.textConfirmacion.setText(cadena);
             } catch (Exception e) {
             }
         }
+        CrearMatCostosyVecEstaciones(cadena);
+        
         Bedit.setEnabled(false);
         Bcarga.setEnabled(false);
+        Bok.setEnabled(true);
+        Bcancelar.setEnabled(true);
+        textConfirmacion.setText(MostrarEstaciones(estTemp));
     }//GEN-LAST:event_BcargaActionPerformed
+
+    private void textSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSalidaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textSalidaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String text = " \t.   Horario de atención 8:00-12:00 & 14:00-18:00 \n \t"
+                + "                 Tel: 01800046952\n \t"
+                + "        Email: soportesJJJ@udea.edu.com.co \n \t"
+                + "           Jose David Henao Gallego\n \t"
+                + "            Juan Andres Lema Tamayo \n \t"
+                + "           Jhon Sebastian Peñate Peña\n \t"
+                + "                     JJJ S.A";
+        JOptionPane.showMessageDialog(null,text);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void BcerrarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcerrarSActionPerformed
+        Bcarga.setEnabled(false);
+        Bedit.setEnabled(false);
+        BcerrarS.setEnabled(false);
+    }//GEN-LAST:event_BcerrarSActionPerformed
+
+    private void BokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BokActionPerformed
+        //Aqui pasaremos el vector y la matiz a las variables con las que trabajaremos el resto del codigo
+       if(matTemp!=null && estTemp!=null){
+           setMatCostos(matTemp);
+           setEstaciones(estTemp);
+           JOptionPane.showMessageDialog(null,"Las estaciones Se han cargado satisfactoreamente");
+           textConfirmacion.setText("");
+           Bok.setEnabled(false);
+           Bcancelar.setEnabled(false);
+       }else{
+         JOptionPane.showMessageDialog(null,"Algo Salio Mal\n \t"
+                 + "favor revisar el Archivo y proceda a cargarlo nuevamente.\n \t"
+                 + "Gracias.");
+       }
+    }//GEN-LAST:event_BokActionPerformed
+
+    private void BcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcancelarActionPerformed
+        JOptionPane.showMessageDialog(null,"No se guardaron cambios ");
+        textConfirmacion.setText("");
+    }//GEN-LAST:event_BcancelarActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        areamatriz.setText(MostarMat(matCostos));
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -536,21 +767,42 @@ public class Estaciones extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Estaciones.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(Estaciones.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(Estaciones.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(Estaciones.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 new Estaciones().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Administracion;
     private javax.swing.JButton BInicio;
+    private javax.swing.JButton Bcancelar;
     private javax.swing.JButton Bcarga;
+    private javax.swing.JButton BcerrarS;
     private javax.swing.JButton Bedit;
+    private javax.swing.JButton Bok;
+    private javax.swing.JPanel PanelGrafica;
     private javax.swing.JTabbedPane administrar;
     private javax.swing.JTextArea areaListaE;
     private javax.swing.JTextArea areaRuta;
+    private javax.swing.JTextArea areamatriz;
+    private javax.swing.JButton bClear;
     private javax.swing.JLabel errorPass;
+    private javax.swing.JLabel icono;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -565,14 +817,17 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField textConfirmacion;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JPanel panelRuta;
+    private javax.swing.JTextArea textConfirmacion;
     private javax.swing.JTextField textDestino;
+    private javax.swing.JTextField textDistancia;
     private javax.swing.JTextField textSalida;
     private javax.swing.JPasswordField textpass;
     private javax.swing.JTextField textuser;
