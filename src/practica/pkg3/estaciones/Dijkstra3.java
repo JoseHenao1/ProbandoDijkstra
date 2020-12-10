@@ -23,27 +23,6 @@ EJEMPLO DE INPUT
 import java.io.PrintStream;
 import java.util.*;
 
-public class Dijkstra3 {
-    
-    /*public static void main(String[] args) {
-        int E , origen, destino , peso , inicial, V;
-        Scanner sc = new Scanner( System.in );      //para lectura de datos
-        //System.out.print("Ingrese el numero de vertices: ");
-        V = sc.nextInt();
-        //System.out.print("Ingrese el numero de aristas: ");
-        E = sc.nextInt();
-        Dijkstra dijkstraAlgorithm = new Dijkstra(V);
-        for( int i = 0 ; i < E ; ++i ){
-            origen = sc.nextInt(); destino = sc.nextInt(); peso = sc.nextInt();
-            dijkstraAlgorithm.addEdge(origen, destino, peso, true);
-        }
-        System.out.print("Ingrese el vertice inicial: ");
-        inicial = sc.nextInt();
-        dijkstraAlgorithm.dijkstra(inicial);
-        dijkstraAlgorithm.printShortestPath();
-    }*/
-}
-
 class Dijkstra{
     
     //similar a los defines de C++
@@ -58,6 +37,7 @@ class Dijkstra{
     private int previo[] = new int[ MAX ];              //para la impresion de caminos
     private boolean dijkstraEjecutado;
     private int destino;
+    private String salida="";
 
     public int getDestino() {
         return destino;
@@ -145,24 +125,16 @@ class Dijkstra{
         if( !dijkstraEjecutado ){
             return ("Es necesario ejecutar el algorithmo de Dijkstra antes de poder imprimir el camino mas corto");
         }
-        PrintStream aux=print(this.destino);
-        String salida=aux.toString();
+        String salida=print(this.destino);
         return salida;
     }
     
     //Impresion del camino mas corto desde el vertice inicial y final ingresados
-    PrintStream print( int destino ){
+    String print( int destino ){
         if( previo[ destino ] != -1 )  //si aun poseo un vertice previo
             print( previo[ destino ] );  //recursivamente sigo explorando
-        PrintStream salida=System.out.printf("%d " , destino+1 );        //terminada la recursion imprimo los vertices recorridos
+        System.out.printf("%d " , destino+1 );        //terminada la recursion imprimo los vertices recorridos
+        salida+=(destino+1)+" ";
         return salida;
-    }
-
-    public int getNumberOfVertices() {
-        return nEstaciones;
-    }
-
-    public void setNumberOfVertices(int numeroDeVertices) {
-        nEstaciones = numeroDeVertices;
     }
 }
