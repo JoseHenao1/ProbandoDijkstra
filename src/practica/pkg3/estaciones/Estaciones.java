@@ -729,7 +729,7 @@ public class Estaciones extends javax.swing.JFrame {
             if (isNumeric(origen)) {
                 int aux1 = Integer.parseInt(origen);
                 aux1=aux1-1;
-                if (aux1 < estaciones.length) {
+                if (aux1 <= estaciones.length) {
                     orig = aux1;
                 } else {
                     JOptionPane.showMessageDialog(null, "El numero de origen no existe");
