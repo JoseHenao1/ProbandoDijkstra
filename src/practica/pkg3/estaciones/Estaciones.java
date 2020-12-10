@@ -17,9 +17,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
 import java.awt.Toolkit;
+
 /**
  *
  * @author Jhosepe
+ * @author JuanLema
+ * @author JoseHenao
  */
 public class Estaciones extends javax.swing.JFrame {
 
@@ -28,11 +31,11 @@ public class Estaciones extends javax.swing.JFrame {
      */
     private String clave = "admin";
     private String usuarios = "admin";
-    private int [][] matCostos;
+    private int[][] matCostos;
     private String[] estaciones;
-    public int [][] matTemp;
+    public int[][] matTemp;
     public String[] estTemp;
-    
+
     public Estaciones() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -43,7 +46,7 @@ public class Estaciones extends javax.swing.JFrame {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/metroicon.png"));
         return retValue;
     }
-    
+
     public String getClave() {
         return clave;
     }
@@ -52,7 +55,6 @@ public class Estaciones extends javax.swing.JFrame {
         this.clave = clave;
     }
 
-  
     public String getUsuarios() {
         return usuarios;
     }
@@ -92,15 +94,14 @@ public class Estaciones extends javax.swing.JFrame {
     public void setEstTemp(String[] estTemp) {
         this.estTemp = estTemp;
     }
-    
-    
-    public void CrearMatCostosyVecEstaciones(String entrada){
+
+    public void CrearMatCostosyVecEstaciones(String entrada) {
         int estaTemp;
         String nEsta;
-        int apuntador=0;
-        int fila=0;
-        int columna=0;
-        int [][] mat;
+        int apuntador = 0;
+        int fila = 0;
+        int columna = 0;
+        int[][] mat;
         String[] lineas = entrada.split("\n");
         nEsta = lineas[0].trim();
         //JOptionPane.showMessageDialog(null,nEsta);
@@ -108,72 +109,64 @@ public class Estaciones extends javax.swing.JFrame {
         String[] estacionesT;
         String[] separador;
         String eTemporal;
-       
-     
-        
+
         estaTemp = Integer.parseInt(nEsta);
         //JOptionPane.showMessageDialog(null," "+estaTemp);
-        mat=new int[estaTemp][estaTemp];
+        mat = new int[estaTemp][estaTemp];
         estacionesT = new String[estaTemp];
-        
+
         //inicializamos estacionesT
         for (int i = 0; i < estaTemp; i++) {
-            estacionesT[i]="";
-         }
-        
-        
-        //craremos el vector para almacenar las estaTemp
-         for (int i = 1; i < lineas.length; i++) {
-             boolean esta=true;
-             separador = lineas[i].split(",");
-               for (int j = 0; j < 2; j++) {
-                  eTemporal = separador[j];
-                 // JOptionPane.showMessageDialog(null,MostrarEstaciones(estacionesT));
-                   for (int k = 0; k < estaTemp; k++) {
-                       if(eTemporal.equalsIgnoreCase(estacionesT[k])){
-                           esta = false;
-                           break;
-                       }
-                    }
-                   if(esta){
-                       if(apuntador<estaTemp){
-                            estacionesT[apuntador]=eTemporal;
-                            apuntador++;
-                          
-                       }
-                     
-                   }
-                   
-                  
-             }
-            
+            estacionesT[i] = "";
         }
-         
-         //crearemos la matriz de costos
-         
-        
-        for (int b = 1; b < lineas.length; b++) {
-            separador = lineas[b].split(",");
-                for (int j = 0; j < estaTemp; j++) {
-                    if(separador[0].equals(estacionesT[j])){
-                      fila = j;
-                    }
-                     if(separador[1].equals(estacionesT[j])){
-                      columna = j;
+
+        //craremos el vector para almacenar las estaTemp
+        for (int i = 1; i < lineas.length; i++) {
+            boolean esta = true;
+            separador = lineas[i].split(",");
+            for (int j = 0; j < 2; j++) {
+                eTemporal = separador[j];
+                // JOptionPane.showMessageDialog(null,MostrarEstaciones(estacionesT));
+                for (int k = 0; k < estaTemp; k++) {
+                    if (eTemporal.equalsIgnoreCase(estacionesT[k])) {
+                        esta = false;
+                        break;
                     }
                 }
-           // JOptionPane.showMessageDialog(null," "+fila+" "+columna);
-            mat[fila][columna]=Integer.parseInt(separador[2].trim());
-            mat[columna][fila]=Integer.parseInt(separador[2].trim());
-            
+                if (esta) {
+                    if (apuntador < estaTemp) {
+                        estacionesT[apuntador] = eTemporal;
+                        apuntador++;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        //crearemos la matriz de costos
+        for (int b = 1; b < lineas.length; b++) {
+            separador = lineas[b].split(",");
+            for (int j = 0; j < estaTemp; j++) {
+                if (separador[0].equals(estacionesT[j])) {
+                    fila = j;
+                }
+                if (separador[1].equals(estacionesT[j])) {
+                    columna = j;
+                }
+            }
+            // JOptionPane.showMessageDialog(null," "+fila+" "+columna);
+            mat[fila][columna] = Integer.parseInt(separador[2].trim());
+            mat[columna][fila] = Integer.parseInt(separador[2].trim());
+
         }
         setMatTemp(mat);
         setEstTemp(estacionesT);
-        
-          
-        
+
     }
-    
+
     public static boolean isNumeric(String cadena) {
 
         boolean resultado;
@@ -187,26 +180,27 @@ public class Estaciones extends javax.swing.JFrame {
 
         return resultado;
     }
-    
-    public String MostarMat(int [][] matriz){
-          String salida = "";
-           for (int i = 0; i < matriz.length; i++) {
-               for (int j = 0; j < matriz.length; j++) {
-                   salida += matriz[i][j]+"\t";
-               }
-               salida += "\n";
-                           
-           }
-          return salida;
-    }
-    public String MostrarEstaciones(String [] e){
+
+    public String MostarMat(int[][] matriz) {
         String salida = "";
-            for (int i = 0 ; i < e.length ;i++)  {
-                salida += (i+1)+". "+ e[i]+"\t\n";
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz.length; j++) {
+                salida += matriz[i][j] + "\t";
+            }
+            salida += "\n";
+
         }
         return salida;
     }
-    
+
+    public String MostrarEstaciones(String[] e) {
+        String salida = "";
+        for (int i = 0; i < e.length; i++) {
+            salida += (i + 1) + ". " + e[i] + "\t\n";
+        }
+        return salida;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -420,19 +414,19 @@ public class Estaciones extends javax.swing.JFrame {
             .addGroup(PanelGraficaLayout.createSequentialGroup()
                 .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelGraficaLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelGraficaLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jButton4)))
-                .addContainerGap(249, Short.MAX_VALUE))
+                        .addComponent(jButton4))
+                    .addGroup(PanelGraficaLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         PanelGraficaLayout.setVerticalGroup(
             PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelGraficaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addGap(33, 33, 33))
         );
@@ -613,7 +607,7 @@ public class Estaciones extends javax.swing.JFrame {
         areaListaE.setText("");
         areaRuta.setText("");
         textDistancia.setText("");
-        
+
     }//GEN-LAST:event_bClearActionPerformed
 
     private void textDistanciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textDistanciaActionPerformed
@@ -621,11 +615,11 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_textDistanciaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       if(getEstaciones() != null){
-           areaListaE.setText(MostrarEstaciones(estaciones));
-       }else{
-           areaListaE.setText("Favor solicite al administrador cargar las estaciones.\t\n gracias");
-       }
+        if (getEstaciones() != null) {
+            areaListaE.setText(MostrarEstaciones(estaciones));
+        } else {
+            areaListaE.setText("Favor solicite al administrador cargar las estaciones.\t\n gracias");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BeditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BeditActionPerformed
@@ -636,9 +630,9 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_BeditActionPerformed
 
     private void administrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_administrarMouseClicked
-       // aqui vamos a poner la validacion de usuario
-   
-       
+        // aqui vamos a poner la validacion de usuario
+
+
     }//GEN-LAST:event_administrarMouseClicked
 
     private void BInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BInicioActionPerformed
@@ -646,28 +640,28 @@ public class Estaciones extends javax.swing.JFrame {
         try {
             String user = textuser.getText();
             char[] pass = textpass.getPassword();
-            
+
             if (user.equals(usuarios)) {
                 if (clave.equals(String.valueOf(pass))) {
                     Bcarga.setEnabled(true);
                     Bedit.setEnabled(true);
                     BcerrarS.setEnabled(true);
                 } else {
-                    messErr="Contraseña Incorrecta";
+                    messErr = "Contraseña Incorrecta";
                     errorPass.setText(messErr);
                 }
-                
-            }else{
-                messErr="Usuario Incorrecto";
+
+            } else {
+                messErr = "Usuario Incorrecto";
                 errorPass.setText(messErr);
             }
-            
+
         } catch (Exception e) {
         }
         textuser.setText("");
         textpass.setText("");
-        
-     
+
+
     }//GEN-LAST:event_BInicioActionPerformed
 
     private void BcargaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BcargaMouseClicked
@@ -679,27 +673,27 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_textpassActionPerformed
 
     private void BcargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcargaActionPerformed
-       JFileChooser buscar = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("TXT","txt");
+        JFileChooser buscar = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("TXT", "txt");
         buscar.setFileFilter(filtro);
         String cadena = "";
-       int selecion = buscar.showOpenDialog(this);
-       
-        if(selecion == JFileChooser.APPROVE_OPTION){
-          File archivo = buscar.getSelectedFile();
-            try (FileReader fr = new FileReader(archivo)){
-                
+        int selecion = buscar.showOpenDialog(this);
+
+        if (selecion == JFileChooser.APPROVE_OPTION) {
+            File archivo = buscar.getSelectedFile();
+            try (FileReader fr = new FileReader(archivo)) {
+
                 int linea = fr.read();
-                while(linea != -1){
+                while (linea != -1) {
                     cadena += (char) linea;
                     linea = fr.read();
-                 }
+                }
                 //this.textConfirmacion.setText(cadena);
             } catch (Exception e) {
             }
         }
         CrearMatCostosyVecEstaciones(cadena);
-        
+
         Bedit.setEnabled(false);
         Bcarga.setEnabled(false);
         Bok.setEnabled(true);
@@ -717,12 +711,14 @@ public class Estaciones extends javax.swing.JFrame {
             String origen = textOrigen.getText();
             String destino = textDestino.getText();
             String result;
-            String rutaFinal="";
-            int orig=0;
-            int dest=0;
-            String []ruta = new String[estaciones.length];
+            String rutaFinal = "";
+            String distancia="";
+            int orig = 0;
+            int dest = 0;
+            int dist=0;
+            String[] ruta = new String[estaciones.length];
             boolean band = true;
-            boolean band2=true;
+            boolean band2 = true;
             for (int i = 0; i < estaciones.length; i++) {
                 for (int j = 0; j < estaciones.length; j++) {
                     if (matCostos[i][j] != 0) {
@@ -745,7 +741,7 @@ public class Estaciones extends javax.swing.JFrame {
                     }
                     if (band && i == estaciones.length - 1) {
                         JOptionPane.showMessageDialog(null, "El origen ingresado es incorrecto");
-                        band2=false;
+                        band2 = false;
                     }
                 }
             }
@@ -768,26 +764,34 @@ public class Estaciones extends javax.swing.JFrame {
                     }
                     if (band && j == estaciones.length - 1) {
                         JOptionPane.showMessageDialog(null, "El destino ingresado es incorrecto");
-                        band2=false;
+                        band2 = false;
                     }
                 }
             }
             obj.dijkstra(orig);
             obj.setDestino(dest);
-            if(band2){
-                result=obj.printShortestPath();
-                ruta=result.split(" ");
+            if (band2) {
+                result = obj.printShortestPath();
+                ruta = result.split(" ");
                 int x;
-                for(int i=0;i<ruta.length;i++){
+                int y=0;
+                for (int i = 0; i < ruta.length; i++) {
                     x = Integer.parseInt(ruta[i]);
-                    rutaFinal+=estaciones[x-1]+", ";
+                    if(i<ruta.length-1){
+                        y = Integer.parseInt(ruta[i+1]);
+                    }
+                    rutaFinal += estaciones[x - 1] + ", ";
+                    dist+=matCostos[x-1][y-1];
                 }
-                
+                distancia=String.valueOf(dist);
+                textDistancia.setText(distancia);
                 areaRuta.setText(rutaFinal);
             }
+            
         } else {
             JOptionPane.showMessageDialog(null, "Aun no se ha cargado el archivo");
         }
+        
     }//GEN-LAST:event_botonCalcularActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -798,7 +802,7 @@ public class Estaciones extends javax.swing.JFrame {
                 + "            Juan Andres Lema Tamayo \n \t"
                 + "           Jhon Sebastian Peñate Peña\n \t"
                 + "                     JJJ S.A";
-        JOptionPane.showMessageDialog(null,text);
+        JOptionPane.showMessageDialog(null, text);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BcerrarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcerrarSActionPerformed
@@ -809,22 +813,22 @@ public class Estaciones extends javax.swing.JFrame {
 
     private void BokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BokActionPerformed
         //Aqui pasaremos el vector y la matiz a las variables con las que trabajaremos el resto del codigo
-       if(matTemp!=null && estTemp!=null){
-           setMatCostos(matTemp);
-           setEstaciones(estTemp);
-           JOptionPane.showMessageDialog(null,"Las estaciones Se han cargado satisfactoreamente");
-           textConfirmacion.setText("");
-           Bok.setEnabled(false);
-           Bcancelar.setEnabled(false);
-       }else{
-         JOptionPane.showMessageDialog(null,"Algo Salio Mal\n \t"
-                 + "favor revisar el Archivo y proceda a cargarlo nuevamente.\n \t"
-                 + "Gracias.");
-       }
+        if (matTemp != null && estTemp != null) {
+            setMatCostos(matTemp);
+            setEstaciones(estTemp);
+            JOptionPane.showMessageDialog(null, "Las estaciones Se han cargado satisfactoreamente");
+            textConfirmacion.setText("");
+            Bok.setEnabled(false);
+            Bcancelar.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Algo Salio Mal\n \t"
+                    + "favor revisar el Archivo y proceda a cargarlo nuevamente.\n \t"
+                    + "Gracias.");
+        }
     }//GEN-LAST:event_BokActionPerformed
 
     private void BcancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BcancelarActionPerformed
-        JOptionPane.showMessageDialog(null,"No se guardaron cambios ");
+        JOptionPane.showMessageDialog(null, "No se guardaron cambios ");
         textConfirmacion.setText("");
     }//GEN-LAST:event_BcancelarActionPerformed
 
