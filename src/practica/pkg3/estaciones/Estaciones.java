@@ -103,8 +103,8 @@ public class Estaciones extends javax.swing.JFrame {
         int [][] mat;
         String[] lineas = entrada.split("\n");
         nEsta = lineas[0].trim();
-        JOptionPane.showMessageDialog(null,nEsta);
-        JOptionPane.showMessageDialog(null,MostrarEstaciones(lineas));
+        //JOptionPane.showMessageDialog(null,nEsta);
+        //JOptionPane.showMessageDialog(null,MostrarEstaciones(lineas));
         String[] estacionesT;
         String[] separador;
         String eTemporal;
@@ -112,7 +112,7 @@ public class Estaciones extends javax.swing.JFrame {
      
         
         estaTemp = Integer.parseInt(nEsta);
-        JOptionPane.showMessageDialog(null," "+estaTemp);
+        //JOptionPane.showMessageDialog(null," "+estaTemp);
         mat=new int[estaTemp][estaTemp];
         estacionesT = new String[estaTemp];
         
@@ -128,7 +128,7 @@ public class Estaciones extends javax.swing.JFrame {
              separador = lineas[i].split(",");
                for (int j = 0; j < 2; j++) {
                   eTemporal = separador[j];
-                  JOptionPane.showMessageDialog(null,MostrarEstaciones(estacionesT));
+                 // JOptionPane.showMessageDialog(null,MostrarEstaciones(estacionesT));
                    for (int k = 0; k < estaTemp; k++) {
                        if(eTemporal.equalsIgnoreCase(estacionesT[k])){
                            esta = false;
@@ -162,7 +162,7 @@ public class Estaciones extends javax.swing.JFrame {
                       columna = j;
                     }
                 }
-            JOptionPane.showMessageDialog(null," "+fila+" "+columna);
+           // JOptionPane.showMessageDialog(null," "+fila+" "+columna);
             mat[fila][columna]=Integer.parseInt(separador[2].trim());
             mat[columna][fila]=Integer.parseInt(separador[2].trim());
             
@@ -785,13 +785,9 @@ public class Estaciones extends javax.swing.JFrame {
                 
                 areaRuta.setText(rutaFinal);
             }
-            
-            
         } else {
             JOptionPane.showMessageDialog(null, "Aun no se ha cargado el archivo");
         }
-        
-        
     }//GEN-LAST:event_botonCalcularActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
