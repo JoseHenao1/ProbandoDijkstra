@@ -5,6 +5,7 @@
  */
 package practica.pkg3.estaciones;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
@@ -17,6 +18,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 
 /**
  *
@@ -35,6 +39,8 @@ public class Estaciones extends javax.swing.JFrame {
     private String[] estaciones;
     public int[][] matTemp;
     public String[] estTemp;
+    public JFrame lienzo;
+    public JPanel pin;
 
     public Estaciones() {
         initComponents();
@@ -237,6 +243,7 @@ public class Estaciones extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         areamatriz = new javax.swing.JTextArea();
         jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         Administracion = new javax.swing.JPanel();
         Bcarga = new javax.swing.JButton();
         Bedit = new javax.swing.JButton();
@@ -301,39 +308,30 @@ public class Estaciones extends javax.swing.JFrame {
         });
 
         panelRuta.setBackground(new java.awt.Color(255, 255, 255));
-        panelRuta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Yu Mincho Demibold", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 51));
         jLabel1.setText("Metro UdeA");
-        panelRuta.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel2.setText("Estacion de partida:");
-        panelRuta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel3.setText("Estacion de destino:");
-        panelRuta.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
         textOrigen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textOrigenActionPerformed(evt);
             }
         });
-        panelRuta.add(textOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 130, -1));
-        panelRuta.add(textDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 130, -1));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("Listado de Estaciones");
-        panelRuta.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, -1, -1));
 
         areaListaE.setEditable(false);
         areaListaE.setColumns(20);
         areaListaE.setRows(5);
         jScrollPane1.setViewportView(areaListaE);
-
-        panelRuta.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(436, 70, 290, 150));
 
         bClear.setBackground(new java.awt.Color(0, 102, 0));
         bClear.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -343,22 +341,17 @@ public class Estaciones extends javax.swing.JFrame {
                 bClearActionPerformed(evt);
             }
         });
-        panelRuta.add(bClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 480, 130, 40));
 
         areaRuta.setColumns(20);
         areaRuta.setFont(new java.awt.Font("Kalinga", 1, 24)); // NOI18N
         areaRuta.setRows(5);
         jScrollPane2.setViewportView(areaRuta);
 
-        panelRuta.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 500, 120));
-
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel5.setText("La mejor ruta para llegar a su destino es: ");
-        panelRuta.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel6.setText("Distancia a recorrer: ");
-        panelRuta.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 300, -1, -1));
 
         textDistancia.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         textDistancia.addActionListener(new java.awt.event.ActionListener() {
@@ -366,10 +359,8 @@ public class Estaciones extends javax.swing.JFrame {
                 textDistanciaActionPerformed(evt);
             }
         });
-        panelRuta.add(textDistancia, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, 150, 120));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        panelRuta.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 660, 10));
 
         jButton2.setBackground(new java.awt.Color(0, 102, 0));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -379,7 +370,6 @@ public class Estaciones extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        panelRuta.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 120, 40));
 
         botonCalcular.setBackground(new java.awt.Color(0, 102, 0));
         botonCalcular.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -389,10 +379,104 @@ public class Estaciones extends javax.swing.JFrame {
                 botonCalcularActionPerformed(evt);
             }
         });
-        panelRuta.add(botonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 130, 40));
 
         icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/metro.png"))); // NOI18N
-        panelRuta.add(icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        javax.swing.GroupLayout panelRutaLayout = new javax.swing.GroupLayout(panelRuta);
+        panelRuta.setLayout(panelRutaLayout);
+        panelRutaLayout.setHorizontalGroup(
+            panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRutaLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(7, 7, 7)
+                        .addComponent(textOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRutaLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(textDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRutaLayout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(botonCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(126, 126, 126)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(530, 530, 530)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel5)
+                .addGap(158, 158, 158)
+                .addComponent(jLabel6))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(textDistancia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(310, 310, 310)
+                .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel3))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(520, 520, 520)
+                .addComponent(jLabel4))
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(icono))
+        );
+        panelRutaLayout.setVerticalGroup(
+            panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRutaLayout.createSequentialGroup()
+                .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRutaLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1)
+                        .addGap(2, 2, 2)
+                        .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelRutaLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(textOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
+                                .addComponent(textDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(botonCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(16, 16, 16)
+                        .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textDistancia, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRutaLayout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(jLabel3))
+                    .addGroup(panelRutaLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel4))
+                    .addGroup(panelRutaLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(icono, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         administrar.addTab("Ruta Metro", panelRuta);
 
@@ -407,6 +491,13 @@ public class Estaciones extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("Grafo");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelGraficaLayout = new javax.swing.GroupLayout(PanelGrafica);
         PanelGrafica.setLayout(PanelGraficaLayout);
         PanelGraficaLayout.setHorizontalGroup(
@@ -415,7 +506,9 @@ public class Estaciones extends javax.swing.JFrame {
                 .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelGraficaLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addComponent(jButton4))
+                        .addComponent(jButton4)
+                        .addGap(46, 46, 46)
+                        .addComponent(jButton3))
                     .addGroup(PanelGraficaLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -425,9 +518,11 @@ public class Estaciones extends javax.swing.JFrame {
             PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelGraficaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
+                .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton3))
                 .addGap(33, 33, 33))
         );
 
@@ -838,6 +933,21 @@ public class Estaciones extends javax.swing.JFrame {
         areamatriz.setText(MostarMat(matCostos));
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         Pintador pintor = new Pintador();
+         lienzo = new JFrame();
+         this.pin = new JPanel();
+         this.lienzo.setVisible(true);
+         this.lienzo.setSize(750,540);
+         this.pin.setSize(750, 540);
+         this.pin.setBackground(Color.red);
+         this.lienzo.add(this.pin);
+         this.pin.setEnabled(true);
+         this.pin.setVisible(true);
+         Pintador.pintarCirculo(this.pin.getGraphics(),10,10,"puta");
+         
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -903,6 +1013,7 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JLabel icono;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
