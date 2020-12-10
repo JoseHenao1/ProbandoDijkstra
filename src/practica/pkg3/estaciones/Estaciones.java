@@ -15,7 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
+import java.awt.Image;
+import java.awt.Toolkit;
 /**
  *
  * @author Jhosepe
@@ -35,9 +36,14 @@ public class Estaciones extends javax.swing.JFrame {
     public Estaciones() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+        this.getIconImage();
     }
 
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/metroicon.png"));
+        return retValue;
+    }
+    
     public String getClave() {
         return clave;
     }
@@ -168,6 +174,20 @@ public class Estaciones extends javax.swing.JFrame {
         
     }
     
+    public static boolean isNumeric(String cadena) {
+
+        boolean resultado;
+
+        try {
+            Integer.parseInt(cadena);
+            resultado = true;
+        } catch (NumberFormatException excepcion) {
+            resultado = false;
+        }
+
+        return resultado;
+    }
+    
     public String MostarMat(int [][] matriz){
           String salida = "";
            for (int i = 0; i < matriz.length; i++) {
@@ -186,8 +206,7 @@ public class Estaciones extends javax.swing.JFrame {
         }
         return salida;
     }
-     
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -205,7 +224,7 @@ public class Estaciones extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        textSalida = new javax.swing.JTextField();
+        textOrigen = new javax.swing.JTextField();
         textDestino = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -218,7 +237,7 @@ public class Estaciones extends javax.swing.JFrame {
         textDistancia = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botonCalcular = new javax.swing.JButton();
         icono = new javax.swing.JLabel();
         PanelGrafica = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -279,6 +298,7 @@ public class Estaciones extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         administrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -302,12 +322,12 @@ public class Estaciones extends javax.swing.JFrame {
         jLabel3.setText("Estacion de destino:");
         panelRuta.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
-        textSalida.addActionListener(new java.awt.event.ActionListener() {
+        textOrigen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textSalidaActionPerformed(evt);
+                textOrigenActionPerformed(evt);
             }
         });
-        panelRuta.add(textSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 130, -1));
+        panelRuta.add(textOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 130, -1));
         panelRuta.add(textDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 130, -1));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -367,15 +387,15 @@ public class Estaciones extends javax.swing.JFrame {
         });
         panelRuta.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 120, 40));
 
-        jButton3.setBackground(new java.awt.Color(0, 102, 0));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton3.setText("Calcular Ruta");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botonCalcular.setBackground(new java.awt.Color(0, 102, 0));
+        botonCalcular.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        botonCalcular.setText("Calcular Ruta");
+        botonCalcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botonCalcularActionPerformed(evt);
             }
         });
-        panelRuta.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 130, 40));
+        panelRuta.add(botonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 130, 40));
 
         icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/metro.png"))); // NOI18N
         panelRuta.add(icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
@@ -403,18 +423,18 @@ public class Estaciones extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 513, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelGraficaLayout.createSequentialGroup()
-                        .addGap(75, 75, 75)
+                        .addGap(38, 38, 38)
                         .addComponent(jButton4)))
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addContainerGap(249, Short.MAX_VALUE))
         );
         PanelGraficaLayout.setVerticalGroup(
             PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelGraficaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                 .addComponent(jButton4)
-                .addContainerGap(150, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
         );
 
         administrar.addTab("Grafica", PanelGrafica);
@@ -558,7 +578,7 @@ public class Estaciones extends javax.swing.JFrame {
                 BInicioActionPerformed(evt);
             }
         });
-        Administracion.add(BInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 100, 34));
+        Administracion.add(BInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 360, 100, 34));
 
         BcerrarS.setBackground(new java.awt.Color(255, 255, 255));
         BcerrarS.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -589,7 +609,7 @@ public class Estaciones extends javax.swing.JFrame {
 
     private void bClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClearActionPerformed
         textDestino.setText("");
-        textSalida.setText("");
+        textOrigen.setText("");
         areaListaE.setText("");
         areaRuta.setText("");
         textDistancia.setText("");
@@ -687,13 +707,75 @@ public class Estaciones extends javax.swing.JFrame {
         textConfirmacion.setText(MostrarEstaciones(estTemp));
     }//GEN-LAST:event_BcargaActionPerformed
 
-    private void textSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSalidaActionPerformed
+    private void textOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textOrigenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textSalidaActionPerformed
+    }//GEN-LAST:event_textOrigenActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
+        Dijkstra obj = new Dijkstra(estaciones.length);
+        if (estaciones.length != 0) {
+            String origen = textOrigen.getText();
+            String destino = textDestino.getText();
+            int orig=0;
+            int dest=0;
+            for (int i = 0; i < estaciones.length; i++) {
+                for (int j = 0; j < estaciones.length; j++) {
+                    if (matCostos[i][j] != 0) {
+                        obj.addEdge(i, j, matCostos[i][j], true);
+                    }
+                }
+            }
+            boolean band = true;
+            if (isNumeric(origen)) {
+                int aux1 = Integer.parseInt(origen);
+                if (aux1 <= estaciones.length) {
+                    orig = aux1;
+                } else {
+                    JOptionPane.showMessageDialog(null, "El numero de origen no existe");
+                }
+            } else {
+                for (int i = 0; i < estaciones.length; i++) {
+                    if (origen.equalsIgnoreCase(estaciones[i])) {
+                        orig = i;
+                        band = false;
+                    }
+                    if (band && i == estaciones.length - 1) {
+                        JOptionPane.showMessageDialog(null, "El origen ingresado es incorrecto");
+                    }
+                }
+            }
+
+            band = true;
+
+            if (isNumeric(destino)) {
+                int aux2 = Integer.parseInt(destino);
+                if (aux2 <= estaciones.length) {
+                    dest = aux2;
+                } else {
+                    JOptionPane.showMessageDialog(null, "El numero de destino no existe");
+                }
+
+            } else {
+                for (int j = 0; j < estaciones.length; j++) {
+                    if (destino.equalsIgnoreCase(estaciones[j])) {
+                        dest = j;
+                        band = false;
+                    }
+                    if (band && j == estaciones.length - 1) {
+                        JOptionPane.showMessageDialog(null, "El destino ingresado es incorrecto");
+                    }
+                }
+            }
+            obj.dijkstra(orig);
+            obj.setDestino(dest);
+            areaRuta.setText(obj.printShortestPath());
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Aun no se ha cargado el archivo");
+        }
+        
+        
+    }//GEN-LAST:event_botonCalcularActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String text = " \t.   Horario de atención 8:00-12:00 & 14:00-18:00 \n \t"
@@ -797,11 +879,11 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JTextArea areaRuta;
     private javax.swing.JTextArea areamatriz;
     private javax.swing.JButton bClear;
+    private javax.swing.JButton botonCalcular;
     private javax.swing.JLabel errorPass;
     private javax.swing.JLabel icono;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -828,7 +910,7 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JTextArea textConfirmacion;
     private javax.swing.JTextField textDestino;
     private javax.swing.JTextField textDistancia;
-    private javax.swing.JTextField textSalida;
+    private javax.swing.JTextField textOrigen;
     private javax.swing.JPasswordField textpass;
     private javax.swing.JTextField textuser;
     // End of variables declaration//GEN-END:variables

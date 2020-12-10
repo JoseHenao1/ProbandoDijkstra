@@ -20,16 +20,17 @@ EJEMPLO DE INPUT
 1
 5
 */
+import java.io.PrintStream;
 import java.util.*;
 
 public class Dijkstra3 {
     
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         int E , origen, destino , peso , inicial, V;
         Scanner sc = new Scanner( System.in );      //para lectura de datos
-        System.out.print("Ingrese el numero de vertices: ");
+        //System.out.print("Ingrese el numero de vertices: ");
         V = sc.nextInt();
-        System.out.print("Ingrese el numero de aristas: ");
+        //System.out.print("Ingrese el numero de aristas: ");
         E = sc.nextInt();
         Dijkstra dijkstraAlgorithm = new Dijkstra(V);
         for( int i = 0 ; i < E ; ++i ){
@@ -40,7 +41,7 @@ public class Dijkstra3 {
         inicial = sc.nextInt();
         dijkstraAlgorithm.dijkstra(inicial);
         dijkstraAlgorithm.printShortestPath();
-    }
+    }*/
 }
 
 class Dijkstra{
@@ -53,12 +54,22 @@ class Dijkstra{
     private int distancia[ ] = new int[ MAX ];          //distancia[ u ] distancia de vértice inicial a vértice con ID = u
     private boolean visitado[ ] = new boolean[ MAX ];   //para vértices visitados
     private PriorityQueue< Node > Q = new PriorityQueue<Node>(); //priority queue propia de Java, usamos el comparador definido para que el de menor valor este en el tope
-    private int V;                                      //numero de vertices
+    private int nEstaciones;                                      //numero de vertices
     private int previo[] = new int[ MAX ];              //para la impresion de caminos
     private boolean dijkstraEjecutado;
+    private int destino;
+
+    public int getDestino() {
+        return destino;
+    }
+
+    public void setDestino(int destino) {
+        this.destino = destino;
+    }
+    
     
     Dijkstra(int V){
-        this.V = V;
+        this.nEstaciones = V;
         for( int i = 0 ; i <= V ; ++i ) 
             ady.add(new ArrayList<Node>()) ; //inicializamos lista de adyacencia
         dijkstraEjecutado = false;
@@ -80,7 +91,7 @@ class Dijkstra{
     
     //función de inicialización
     private void init(){
-        for( int i = 0 ; i <= V ; ++i ){
+        for( int i = 0 ; i <= nEstaciones ; ++i ){
             distancia[ i ] = INF;  //inicializamos todas las distancias con valor infinito
             visitado[ i ] = false; //inicializamos todos los vértices como no visitados
             previo[ i ] = -1;      //inicializamos el previo del vertice i con -1
@@ -118,44 +129,40 @@ class Dijkstra{
         }
 
         System.out.printf( "Distancias mas cortas iniciando en vertice %d\n" , inicial );
-        for( int i = 1 ; i <= V ; ++i ){
+        for( int i = 1 ; i <= nEstaciones ; ++i ){
             System.out.printf("Vertice %d , distancia mas corta = %d\n" , i , distancia[ i ] );
         }
         dijkstraEjecutado = true;
     }
     
-    void addEdge( int origen , int destino , int peso , boolean dirigido ){
-        ady.get( origen ).add( new Node( destino , peso ) );    //grafo diridigo
+    void addEdge( int origen , int destino , int costos , boolean dirigido ){
+        ady.get( origen ).add( new Node( destino , costos ) );    //grafo diridigo
         if( !dirigido )
-            ady.get( destino ).add( new Node( origen , peso ) ); //no dirigido
+            ady.get( destino ).add( new Node( origen , costos ) ); //no dirigido
     }
     
-    void printShortestPath(){
+    String printShortestPath(){
         if( !dijkstraEjecutado ){
-            System.out.println("Es necesario ejecutar el algorithmo de Dijkstra antes de poder imprimir el camino mas corto");
-            return;
+            return ("Es necesario ejecutar el algorithmo de Dijkstra antes de poder imprimir el camino mas corto");
         }
-        Scanner sc = new Scanner( System.in );      //para lectura de datos
-        System.out.println("\n**************Impresion de camino mas corto**************");
-        System.out.printf("Ingrese vertice destino: ");
-        int destino;
-        destino = sc.nextInt();
-        print( destino );
-        System.out.printf("\n");
+        PrintStream aux=print(this.destino);
+        String salida=aux.toString();
+        return salida;
     }
     
     //Impresion del camino mas corto desde el vertice inicial y final ingresados
-    void print( int destino ){
-        if( previo[ destino ] != -1 )    //si aun poseo un vertice previo
+    PrintStream print( int destino ){
+        if( previo[ destino ] != -1 )  //si aun poseo un vertice previo
             print( previo[ destino ] );  //recursivamente sigo explorando
-        System.out.printf("%d " , destino );        //terminada la recursion imprimo los vertices recorridos
+        PrintStream salida=System.out.printf("%d " , destino+1 );        //terminada la recursion imprimo los vertices recorridos
+        return salida;
     }
 
     public int getNumberOfVertices() {
-        return V;
+        return nEstaciones;
     }
 
     public void setNumberOfVertices(int numeroDeVertices) {
-        V = numeroDeVertices;
+        nEstaciones = numeroDeVertices;
     }
 }
