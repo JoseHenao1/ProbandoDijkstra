@@ -728,7 +728,8 @@ public class Estaciones extends javax.swing.JFrame {
             }
             if (isNumeric(origen)) {
                 int aux1 = Integer.parseInt(origen);
-                if (aux1 <= estaciones.length) {
+                aux1=aux1-1;
+                if (aux1 < estaciones.length) {
                     orig = aux1;
                 } else {
                     JOptionPane.showMessageDialog(null, "El numero de origen no existe");
@@ -750,7 +751,8 @@ public class Estaciones extends javax.swing.JFrame {
 
             if (isNumeric(destino)) {
                 int aux2 = Integer.parseInt(destino);
-                if (aux2 <= estaciones.length) {
+                aux2=aux2-1;
+                if (aux2 < estaciones.length) {
                     dest = aux2;
                 } else {
                     JOptionPane.showMessageDialog(null, "El numero de destino no existe");
