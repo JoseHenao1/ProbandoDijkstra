@@ -716,8 +716,13 @@ public class Estaciones extends javax.swing.JFrame {
         if (estaciones.length != 0) {
             String origen = textOrigen.getText();
             String destino = textDestino.getText();
+            String result;
+            String rutaFinal="";
             int orig=0;
             int dest=0;
+            String []ruta = new String[estaciones.length];
+            boolean band = true;
+            boolean band2=true;
             for (int i = 0; i < estaciones.length; i++) {
                 for (int j = 0; j < estaciones.length; j++) {
                     if (matCostos[i][j] != 0) {
@@ -725,7 +730,6 @@ public class Estaciones extends javax.swing.JFrame {
                     }
                 }
             }
-            boolean band = true;
             if (isNumeric(origen)) {
                 int aux1 = Integer.parseInt(origen);
                 if (aux1 <= estaciones.length) {
@@ -741,6 +745,7 @@ public class Estaciones extends javax.swing.JFrame {
                     }
                     if (band && i == estaciones.length - 1) {
                         JOptionPane.showMessageDialog(null, "El origen ingresado es incorrecto");
+                        band2=false;
                     }
                 }
             }
@@ -763,12 +768,24 @@ public class Estaciones extends javax.swing.JFrame {
                     }
                     if (band && j == estaciones.length - 1) {
                         JOptionPane.showMessageDialog(null, "El destino ingresado es incorrecto");
+                        band2=false;
                     }
                 }
             }
             obj.dijkstra(orig);
             obj.setDestino(dest);
-            areaRuta.setText(obj.printShortestPath());
+            if(band2){
+                result=obj.printShortestPath();
+                ruta=result.split(" ");
+                int x;
+                for(int i=0;i<ruta.length;i++){
+                    x = Integer.parseInt(ruta[i]);
+                    rutaFinal+=estaciones[x-1]+", ";
+                }
+                
+                areaRuta.setText(rutaFinal);
+            }
+            
             
         } else {
             JOptionPane.showMessageDialog(null, "Aun no se ha cargado el archivo");
