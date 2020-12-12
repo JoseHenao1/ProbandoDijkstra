@@ -6,6 +6,7 @@
 package practica.pkg3.estaciones;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -934,8 +936,40 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         Pintador pintor = new Pintador();
-         lienzo = new JFrame();
+        ArrayList<numero> xAnt = new ArrayList<>();
+        ArrayList<numero> yAnt = new ArrayList<>();
+        numero p;
+        int x;
+        int y;
+        
+         for (int i = 0; i < estaciones.length; i++) {
+            VentanaGrafo v = new VentanaGrafo();
+            v.setNombre(estaciones[i]);
+            if(i==0){
+              v.setX(200);
+              v.setY(100);
+              v.setVeces(i);
+              p = new numero(200);
+              xAnt.add(p);
+              p = new numero(100);
+              yAnt.add(p);
+            }else{
+                x = v.CalcularX(xAnt);
+                y = v.CalcularY(yAnt);
+                v.setX(x);
+                v.setY(y);
+                v.setVeces(i);
+                p = new numero(x);
+                xAnt.add(p);
+                p = new numero(y);
+                yAnt.add(p);
+            }
+            
+            v.setVisible(true);
+        }
+         
+        
+         /*lienzo = new JFrame();
          this.pin = new JPanel();
          this.lienzo.setVisible(true);
          this.lienzo.setSize(750,540);
@@ -945,6 +979,7 @@ public class Estaciones extends javax.swing.JFrame {
          this.pin.setEnabled(true);
          this.pin.setVisible(true);
          Pintador.pintarCirculo(this.pin.getGraphics(),10,10,"puta");
+         */
          
     }//GEN-LAST:event_jButton3ActionPerformed
 
