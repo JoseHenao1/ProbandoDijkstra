@@ -111,12 +111,16 @@ public class Algoritmo_Prim
     public static void main(String[] args) //Funcion principal Main
     {
         //Matriz a aplicarle el algoritmo
-        int [][] MMatrizOriginal ={{0, 4, 7, 6, 0, 0},
-                                   {4, 0, 0, 0, 0, 0},
-                                   {7, 0, 0, 1, 0, 8},
-                                   {6, 0, 1, 0, 10, 0},
-                                   {0, 0, 0, 10, 0, 12},
-                                   {0, 0, 8, 0, 12, 0}
+        int [][] MMatrizOriginal ={{0, 5, 0, 0, 8, 0, 0, 0, 0, 23},
+                                   {5, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0},
+                                   {0, 0, 0, 7, 0, 0, 0, 4, 0, 16, 0},
+                                   {0, 0, 7, 0, 0, 0, 0, 9, 0, 0, 0},
+                                   {8, 0, 0, 0, 0, 12, 0, 0, 0, 0,0},
+                                   {0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0},
+                                   {0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0},
+                                   {0, 10, 4, 9, 0, 0, 15, 0, 0, 13, 0},
+                                   {0, 0, 16, 0, 0, 0, 0, 13, 20, 0, 0},
+                                   {23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
         System.out.println("MATRIZ ORIGINAL");
         for(int contadorHorizontal = 0; contadorHorizontal < MMatrizOriginal[0].length;contadorHorizontal++)
