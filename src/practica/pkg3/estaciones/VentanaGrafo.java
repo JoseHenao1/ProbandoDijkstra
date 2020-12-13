@@ -234,10 +234,10 @@ public class VentanaGrafo extends javax.swing.JFrame {
     }
      */
     public static void pintarCirculo(Graphics g, int x, int y, String estacion, int[][] matrizCostos, int xAnterior, int yAnterior) {
-        ((Graphics2D) g).setColor(Color.darkGray);
+        ((Graphics2D) g).setColor(Color.ORANGE);
         ((Graphics2D) g).setStroke(new BasicStroke(3));//leda el grosor al circulo        
         ((Graphics2D) g).fillOval(x, y, 30, 30);
-        ((Graphics2D) g).setColor(Color.ORANGE);
+        ((Graphics2D) g).setColor(Color.BLACK);
         ((Graphics2D) g).drawOval(x, y, 30, 30);
 
         ((Graphics2D) g).setColor(Color.black);
