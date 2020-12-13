@@ -31,14 +31,23 @@ public class VentanaGrafo extends javax.swing.JFrame {
     private String nombre;
     private int radio = 10;
     private int diametro = 20;
-    //public int[] xs = {200, 220, 180, 240, 160, 260, 140, 280, 120, 300};
-    public int[] xs;
-    //public int[] ys = {100, 120, 140, 160, 180, 200, 220, 240, 260, 280};
-    public int [] ys;
+    public int[] xs = {200, 220, 180, 240, 160, 260, 140, 280, 120, 300};
+   // public int[] xs;
+    public int[] ys = {100, 120, 140, 160, 180, 200, 220, 240, 260, 280};
+    //public int [] ys;
     int xAnterior;
     int yAnterior;
     Distancias[] distancias;
 
+    public Distancias[] getDistancias() {
+        return distancias;
+    }
+
+    public void setDistancias(Distancias[] distancias) {
+        this.distancias = distancias;
+    }
+
+    
     public int getVeces() {
         return veces;
     }
@@ -112,6 +121,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
             }
             controlD++;
         }
+        //getDistancias()[i].getEstacinO() == 0
         
     }
 
