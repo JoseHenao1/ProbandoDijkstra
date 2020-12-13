@@ -31,10 +31,10 @@ public class VentanaGrafo extends javax.swing.JFrame {
     private String nombre;
     private int radio = 10;
     private int diametro = 20;
-    public int[] xs = {200, 220, 180, 240, 160, 260, 140, 280, 120, 300};
-   // public int[] xs;
-    public int[] ys = {100, 120, 140, 160, 180, 200, 220, 240, 260, 280};
-    //public int [] ys;
+    //public int[] xs = {200, 220, 180, 240, 160, 260, 140, 280, 120, 300};
+    public int[] xs= new int[100];
+    //public int[] ys = {100, 120, 140, 160, 180, 200, 220, 240, 260, 280};
+    public int [] ys= new int[100];
     int xAnterior;
     int yAnterior;
     Distancias[] distancias;
@@ -103,17 +103,34 @@ public class VentanaGrafo extends javax.swing.JFrame {
     public void setyAnterior(int yAnterior) {
         this.yAnterior = yAnterior;
     }
+
+    public int[] getXs() {
+        return xs;
+    }
+
+    public void setXs(int[] xs) {
+        this.xs = xs;
+    }
+
+    public int[] getYs() {
+        return ys;
+    }
+
+    public void setYs(int[] ys) {
+        this.ys = ys;
+    }
     
     public void llenarVectorXyY(int[][] matrizInicial) {
         int controlD = 0;
         int cont = 0;
-        distancias = new Distancias[matrizInicial.length-1];
+        int [] vX = new int[matrizInicial.length];
+        int [] vY = new int[matrizInicial.length];
+        distancias = new Distancias[matrizInicial.length];
         for (int i = 0; i < matrizInicial.length; i++) {
             for (int j = 0; j < matrizInicial.length; j++) {
                 if (j+controlD<matrizInicial.length) {
                     if (matrizInicial[i][controlD + j] != 0) {
-                        Distancias di = new Distancias(i,(controlD + j),(matrizInicial[i][controlD + j]));
-                        distancias[cont] = di ;
+                        distancias[cont] = new Distancias(i,(controlD + j),(matrizInicial[i][controlD + j]));
                         cont++;
                     }
                 }
@@ -121,6 +138,22 @@ public class VentanaGrafo extends javax.swing.JFrame {
             }
             controlD++;
         }
+        int xyz;
+        for(int x=0;x<vX.length;x++){
+            if(x==0){
+                vX[x]=400;
+                vY[x]=100;
+            }else if(x%2==0){
+                vX[x]=(distancias[x].getDistancia()+150);
+                vY[x]=(distancias[x].getDistancia()+50);
+            }else if(x%2==1){
+                vX[x]=(distancias[x].getDistancia()+25);
+                vY[x]=(distancias[x].getDistancia()+20);
+            }
+        }
+        this.setXs(vX);
+        this.setYs(vY);
+        
         //getDistancias()[i].getEstacinO() == 0
         
     }
@@ -185,28 +218,14 @@ public class VentanaGrafo extends javax.swing.JFrame {
         ((Graphics2D) g).drawString(String.valueOf(tam), xAux, yAux);
     }
 
-    public int CalcularX(ArrayList<numero> l,int i) {
+    public int CalcularX(int i) {
         int salida = 0;
-        /*Random aleatorio = new Random();
-        salida = aleatorio.nextInt(800);
-        if (noEsta(salida, l)) {
-            return 0;
-        } else {
-            return salida;
-        }*/
         salida=xs[i];
         return salida;
     }
 
-    public int CalcularY(ArrayList<numero> l,int i) {
+    public int CalcularY(int i) {
         int salida;
-        /*Random aleatorio = new Random();
-        salida = aleatorio.nextInt(500);
-        if (noEsta(salida, l)) {
-            return 0;
-        } else {
-            return salida;
-        }*/
         salida=ys[i];
         return salida;
     }
