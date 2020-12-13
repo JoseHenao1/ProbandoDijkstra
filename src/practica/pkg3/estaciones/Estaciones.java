@@ -953,7 +953,7 @@ public class Estaciones extends javax.swing.JFrame {
               v.setX(v.CalcularX(i));
               v.setY(v.CalcularY(i));
               v.setVeces(i);
-              v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], i,v.getxAnterior(),v.getyAnterior());
+              v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostos,v.getxAnterior(),v.getyAnterior());
               p = new numero(v.getX());
               xAnt.add(p);
               p = new numero(v.getY());
@@ -966,7 +966,7 @@ public class Estaciones extends javax.swing.JFrame {
                 v.setX(x);
                 v.setY(y);
                 v.setVeces(i);
-                v.pintarCirculo(g,v.getX(),v.getY(),estaciones[i],i,v.getxAnterior(),v.getyAnterior());
+                v.pintarCirculo(g,v.getX(),v.getY(),estaciones[i],matCostos,v.getxAnterior(),v.getyAnterior());
                  p = new numero(x);
                 xAnt.add(p);
                 p = new numero(y);
