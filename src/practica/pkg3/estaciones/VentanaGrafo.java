@@ -27,6 +27,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
     JPanel lienzo;
     private int x;
     private int y;
+    private int option;
     private int veces;
     private String nombre;
     private int radio = 10;
@@ -34,7 +35,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
     //public int[] xs = {200, 220, 180, 240, 160, 260, 140, 280, 120, 300};
     public static int[] xs;
     //public int[] ys = {100, 120, 140, 160, 180, 200, 220, 240, 260, 280};
-    public static int [] ys;
+    public static int[] ys;
     int xAnterior;
     int yAnterior;
     Distancias[] distancias;
@@ -46,13 +47,21 @@ public class VentanaGrafo extends javax.swing.JFrame {
     public void setDistancias(Distancias[] distancias) {
         this.distancias = distancias;
     }
-    
+
     public int getVeces() {
         return veces;
     }
 
     public void setVeces(int veces) {
         this.veces = veces;
+    }
+
+    public int getOption() {
+        return option;
+    }
+
+    public void setOption(int option) {
+        this.option = option;
     }
 
     public int getX() {
@@ -118,20 +127,20 @@ public class VentanaGrafo extends javax.swing.JFrame {
     public void setYs(int[] ys) {
         this.ys = ys;
     }
-    
+
     public void llenarVectorXyY(int[][] matrizInicial) {
         int controlD = 0;
         int cont = 0;
         Random aleatorio = new Random();
-        int [] vX = new int[matrizInicial.length];
-        int [] vY = new int[matrizInicial.length];
+        int[] vX = new int[matrizInicial.length];
+        int[] vY = new int[matrizInicial.length];
         distancias = new Distancias[matrizInicial.length];
         for (int i = 0; i < matrizInicial.length; i++) {
             for (int j = 0; j < matrizInicial.length; j++) {
-                if (j+controlD<matrizInicial.length) {
+                if (j + controlD < matrizInicial.length) {
                     if (matrizInicial[i][controlD + j] != 0) {
-                        Distancias d = new Distancias(i,(controlD + j),(matrizInicial[i][controlD + j]));
-                        distancias[cont] = d ;
+                        Distancias d = new Distancias(i, (controlD + j), (matrizInicial[i][controlD + j]));
+                        distancias[cont] = d;
                         cont++;
                     }
                 }
@@ -141,72 +150,71 @@ public class VentanaGrafo extends javax.swing.JFrame {
         }
         int xyz;
         numero p;
-         ArrayList<numero> xAnt = new ArrayList<>();
+        ArrayList<numero> xAnt = new ArrayList<>();
         ArrayList<numero> yAnt = new ArrayList<>();
-        for(int x=0;x<vX.length;x++){
-             int distX;
-             int distY;
-              //if(distancias[x]!=null){
-               //dist  = distancias[x].getDistancia();
-               distX = aleatorio.nextInt(600);
-               distY = aleatorio.nextInt(400);
-            
-            
-            
-            if(x==0){
-                vX[x]=200;
-                vY[x]=300;
-            }else if(x%2==0){
-                int nuevoX = distX;
-                int nuevoY = distY;
-                if(noEsta(nuevoX, xAnt)){
-                    vX[x]= nuevoX+140;
-                }else{
-                   vX[x]= nuevoX+120;
+        for (int x = 0; x < vX.length; x++) {
+            if (this.getOption() == 1) {
+                int distX;
+                int distY;
+                distX = aleatorio.nextInt(600);
+                distY = aleatorio.nextInt(400);
+
+                if (x == 0) {
+                    vX[x] = 200;
+                    vY[x] = 300;
+                } else if (x % 2 == 0) {
+                    int nuevoX = distX;
+                    int nuevoY = distY;
+                    if (noEsta(nuevoX, xAnt)) {
+                        vX[x] = nuevoX + 140;
+                    } else {
+                        vX[x] = nuevoX + 120;
+                    }
+                    if (noEsta(nuevoY, yAnt)) {
+                        vY[x] = nuevoY + 140;
+                    } else {
+                        vY[x] = nuevoY + 120;
+                    }
+
+                    p = new numero(nuevoX);
+                    xAnt.add(p);
+                    p = new numero(nuevoY);
+                    yAnt.add(p);
+                } else if (x % 2 == 1) {
+                    int nuevoX = distX;
+                    int nuevoY = distY;
+                    if (noEsta(nuevoX, xAnt)) {
+                        vX[x] = nuevoX + 140;
+                    } else {
+                        vX[x] = nuevoX + 140;
+                    }
+                    if (noEsta(nuevoY, yAnt)) {
+                        vY[x] = nuevoY + 140;
+                    } else {
+                        vY[x] = nuevoY + 100;
+                    }
+
+                    p = new numero(nuevoX);
+                    xAnt.add(p);
+                    p = new numero(nuevoY);
+                    yAnt.add(p);
                 }
-                 if(noEsta(nuevoY, yAnt)){
-                    vY[x]= nuevoY+140;
-                }else{
-                   vY[x]= nuevoY+120;
+            } else if (this.getOption() == 0) {
+                if (x == 0) {
+                    vX[x] = 100;
+                    vY[x] = 130;
+                } else if ((x+1) % 3 == 0) {
+                    vX[x] = 100;
+                    vY[x] = vY[x - 1] + 113;
+                } else {
+                    vX[x] = vX[x - 1] + 280;
+                    vY[x] = vY[x - 1];
                 }
-                     
-                p = new numero(nuevoX);
-                xAnt.add(p);
-                p = new numero(nuevoY);
-                yAnt.add(p);
-            }else if(x%2==1){
-                int nuevoX = distX;
-                int nuevoY = distY;
-                if(noEsta(nuevoX, xAnt)){
-                    vX[x]= nuevoX+140;
-                }else{
-                   vX[x]= nuevoX+140;
-                }
-                 if(noEsta(nuevoY, yAnt)){
-                    vY[x]= nuevoY+140;
-                }else{
-                   vY[x]= nuevoY+100;
-                }
-                     
-                p = new numero(nuevoX);
-                xAnt.add(p);
-                p = new numero(nuevoY);
-                yAnt.add(p);
             }
-            /*if (x==0){
-                vX[x] = 100;
-                vY[x] = 130;
-            }else if(x%3==0){
-                vX[x] = 100;
-                vY[x] =vY[x-1]+113;
-            }else{
-                vX[x] = vX[x-1]+280;
-                vY[x] = vY[x-1];
-            }*/
         }
         this.setXs(vX);
-        this.setYs(vY); 
-        
+        this.setYs(vY);
+
     }
 
     public VentanaGrafo() {
@@ -224,8 +232,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
         super.paint(g);
         pintarCirculo(g, x, y, nombre, veces,xAnterior,yAnterior);
     }
-    */
-
+     */
     public static void pintarCirculo(Graphics g, int x, int y, String estacion, int[][] matrizCostos, int xAnterior, int yAnterior) {
         ((Graphics2D) g).setColor(Color.blue);
         ((Graphics2D) g).setStroke(new BasicStroke(3));//leda el grosor al circulo        
@@ -237,7 +244,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
         Font fuente = new Font("Monospaced", Font.BOLD, 12);
         g.setFont(fuente);
         ((Graphics2D) g).drawString(estacion, x - 20, y);
-        
+
         for (int i = 0; i < matrizCostos.length; i++) {
             for (int j = 0; j < matrizCostos.length; j++) {
                 if (matrizCostos[i][j] != 0) {
@@ -268,7 +275,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
         if (y1 >= y2) {
             yAux = ((y1 - y2) / 2) + y2;
         }
-         ((Graphics2D)g).setColor(Color.black);
+        ((Graphics2D) g).setColor(Color.black);
         Font fuente = new Font("Monospaced", Font.PLAIN, 12);
         g.setFont(fuente);
         ((Graphics2D) g).drawString(String.valueOf(tam), xAux, yAux);
@@ -276,13 +283,13 @@ public class VentanaGrafo extends javax.swing.JFrame {
 
     public int CalcularX(int i) {
         int salida = 0;
-        salida=xs[i];
+        salida = xs[i];
         return salida;
     }
 
     public int CalcularY(int i) {
         int salida;
-        salida=ys[i];
+        salida = ys[i];
         return salida;
     }
 

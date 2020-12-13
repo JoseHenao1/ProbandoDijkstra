@@ -43,6 +43,7 @@ public class Estaciones extends javax.swing.JFrame {
     public String[] estTemp;
     public JFrame lienzo;
     public JPanel pin;
+    public boolean banderita = true;
     JTextArea areamatriz = new JTextArea();
 
     public Estaciones() {
@@ -241,10 +242,12 @@ public class Estaciones extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jButton2 = new javax.swing.JButton();
         botonCalcular = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         icono = new javax.swing.JLabel();
         PanelGrafica = new javax.swing.JPanel();
         buttonVerMatriz = new javax.swing.JButton();
-        verGrafo = new javax.swing.JButton();
+        verGrafoRandom = new javax.swing.JButton();
+        verGrafoFijo = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         Administracion = new javax.swing.JPanel();
         Bcarga = new javax.swing.JButton();
@@ -400,6 +403,19 @@ public class Estaciones extends javax.swing.JFrame {
         });
         panelRuta.add(botonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 167, 130, 40));
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon soporte3.png"))); // NOI18N
+        jButton3.setBorder(null);
+        jButton3.setBorderPainted(false);
+        jButton3.setFocusPainted(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        panelRuta.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 460, -1, -1));
+
         icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/metro.png"))); // NOI18N
         panelRuta.add(icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 602));
 
@@ -415,18 +431,31 @@ public class Estaciones extends javax.swing.JFrame {
         });
         PanelGrafica.add(buttonVerMatriz, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
 
-        verGrafo.setText("Grafo");
-        verGrafo.addMouseListener(new java.awt.event.MouseAdapter() {
+        verGrafoRandom.setText("Grafo Random");
+        verGrafoRandom.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                verGrafoMouseClicked(evt);
+                verGrafoRandomMouseClicked(evt);
             }
         });
-        verGrafo.addActionListener(new java.awt.event.ActionListener() {
+        verGrafoRandom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                verGrafoActionPerformed(evt);
+                verGrafoRandomActionPerformed(evt);
             }
         });
-        PanelGrafica.add(verGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, -1, -1));
+        PanelGrafica.add(verGrafoRandom, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, -1, -1));
+
+        verGrafoFijo.setText("Grafo Fijo");
+        verGrafoFijo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verGrafoFijoMouseClicked(evt);
+            }
+        });
+        verGrafoFijo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verGrafoFijoActionPerformed(evt);
+            }
+        });
+        PanelGrafica.add(verGrafoFijo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 490, -1, -1));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mapaM2.jpg"))); // NOI18N
         PanelGrafica.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 535));
@@ -706,94 +735,97 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_textOrigenActionPerformed
 
     private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
-        Dijkstra obj = new Dijkstra(estaciones.length);
-        if (estaciones.length != 0) {
-            String origen = textOrigen.getText();
-            String destino = textDestino.getText();
-            String result;
-            String rutaFinal = "";
-            String distancia = "";
-            int orig = 0;
-            int dest = 0;
-            int dist = 0;
-            String[] ruta = new String[estaciones.length];
-            boolean band = true;
-            boolean band2 = true;
-            for (int i = 0; i < estaciones.length; i++) {
-                for (int j = 0; j < estaciones.length; j++) {
-                    if (matCostos[i][j] != 0) {
-                        obj.addEdge(i, j, matCostos[i][j], true);
-                    }
-                }
-            }
-            if (isNumeric(origen)) {
-                int aux1 = Integer.parseInt(origen);
-                aux1 = aux1 - 1;
-                if (aux1 <= estaciones.length) {
-                    orig = aux1;
-                } else {
-                    JOptionPane.showMessageDialog(null, "El numero de origen no existe");
-                }
-            } else {
+        try {
+            Dijkstra obj = new Dijkstra(estaciones.length);
+            if (estaciones.length != 0) {
+                String origen = textOrigen.getText();
+                String destino = textDestino.getText();
+                String result;
+                String rutaFinal = "";
+                String distancia = "";
+                int orig = 0;
+                int dest = 0;
+                int dist = 0;
+                String[] ruta = new String[estaciones.length];
+                boolean band = true;
+                boolean band2 = true;
                 for (int i = 0; i < estaciones.length; i++) {
-                    if (origen.equalsIgnoreCase(estaciones[i])) {
-                        orig = i;
-                        band = false;
-                    }
-                    if (band && i == estaciones.length - 1) {
-                        JOptionPane.showMessageDialog(null, "El origen ingresado es incorrecto");
-                        band2 = false;
+                    for (int j = 0; j < estaciones.length; j++) {
+                        if (matCostos[i][j] != 0) {
+                            obj.addEdge(i, j, matCostos[i][j], true);
+                        }
                     }
                 }
-            }
-
-            band = true;
-
-            if (isNumeric(destino)) {
-                int aux2 = Integer.parseInt(destino);
-                aux2 = aux2 - 1;
-                if (aux2 < estaciones.length) {
-                    dest = aux2;
+                if (isNumeric(origen)) {
+                    int aux1 = Integer.parseInt(origen);
+                    aux1 = aux1 - 1;
+                    if (aux1 <= estaciones.length) {
+                        orig = aux1;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El numero de origen no existe");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "El numero de destino no existe");
+                    for (int i = 0; i < estaciones.length; i++) {
+                        if (origen.equalsIgnoreCase(estaciones[i])) {
+                            orig = i;
+                            band = false;
+                        }
+                        if (band && i == estaciones.length - 1) {
+                            JOptionPane.showMessageDialog(null, "El origen ingresado es incorrecto");
+                            band2 = false;
+                        }
+                    }
+                }
+
+                band = true;
+
+                if (isNumeric(destino)) {
+                    int aux2 = Integer.parseInt(destino);
+                    aux2 = aux2 - 1;
+                    if (aux2 < estaciones.length) {
+                        dest = aux2;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El numero de destino no existe");
+                    }
+
+                } else {
+                    for (int j = 0; j < estaciones.length; j++) {
+                        if (destino.equalsIgnoreCase(estaciones[j])) {
+                            dest = j;
+                            band = false;
+                        }
+                        if (band && j == estaciones.length - 1) {
+                            JOptionPane.showMessageDialog(null, "El destino ingresado es incorrecto");
+                            band2 = false;
+                        }
+                    }
+                }
+                obj.dijkstra(orig);
+                obj.setDestino(dest);
+                if (band2) {
+                    result = obj.printShortestPath();
+                    ruta = result.split(" ");
+                    int x;
+                    int y = 0;
+                    for (int i = 0; i < ruta.length; i++) {
+                        x = Integer.parseInt(ruta[i]);
+                        if (i < ruta.length - 1) {
+                            y = Integer.parseInt(ruta[i + 1]);
+                        }
+                        rutaFinal += estaciones[x - 1] + ", ";
+                        dist += matCostos[x - 1][y - 1];
+                    }
+                    distancia = String.valueOf(dist);
+                    textDistancia.setText(distancia);
+                    areaRuta.setText(rutaFinal);
                 }
 
             } else {
-                for (int j = 0; j < estaciones.length; j++) {
-                    if (destino.equalsIgnoreCase(estaciones[j])) {
-                        dest = j;
-                        band = false;
-                    }
-                    if (band && j == estaciones.length - 1) {
-                        JOptionPane.showMessageDialog(null, "El destino ingresado es incorrecto");
-                        band2 = false;
-                    }
-                }
+                JOptionPane.showMessageDialog(null, "Aun no se ha cargado el archivo");
             }
-            obj.dijkstra(orig);
-            obj.setDestino(dest);
-            if (band2) {
-                result = obj.printShortestPath();
-                ruta = result.split(" ");
-                int x;
-                int y = 0;
-                for (int i = 0; i < ruta.length; i++) {
-                    x = Integer.parseInt(ruta[i]);
-                    if (i < ruta.length - 1) {
-                        y = Integer.parseInt(ruta[i + 1]);
-                    }
-                    rutaFinal += estaciones[x - 1] + ", ";
-                    dist += matCostos[x - 1][y - 1];
-                }
-                distancia = String.valueOf(dist);
-                textDistancia.setText(distancia);
-                areaRuta.setText(rutaFinal);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Aun no se ha cargado el archivo");
+        } catch (Exception E) {
+            JOptionPane.showMessageDialog(null, "Recuerde cargar el archivo o comuniquese con servicio al cliente");
         }
-
     }//GEN-LAST:event_botonCalcularActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -835,103 +867,143 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_BcancelarActionPerformed
 
     private void buttonVerMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerMatrizActionPerformed
-        JFrame vista = new JFrame();
-        vista.setVisible(true);
-        vista.setSize(600, 400);
-        vista.setLocationRelativeTo(null);
-        vista.add(areamatriz);
-        areamatriz.setVisible(true);
-        areamatriz.setSize(600, 400);
-        areamatriz.setBackground(Color.WHITE);
-        prim obj = new prim();
-        int[][] matCostosPrim = obj.AlgPrim(matCostos, estaciones, 0);
-        areamatriz.setText(MostarMat(matCostosPrim));
+        try {
+            JFrame vista = new JFrame();
+            vista.setVisible(true);
+            vista.setSize(600, 400);
+            vista.setLocationRelativeTo(null);
+            vista.add(areamatriz);
+            areamatriz.setVisible(true);
+            areamatriz.setSize(600, 400);
+            areamatriz.setBackground(Color.WHITE);
+            prim obj = new prim();
+            int[][] matCostosPrim = obj.AlgPrim(matCostos, estaciones, 0);
+            areamatriz.setText(MostarMat(matCostosPrim));
+        } catch (Exception E) {
+            JOptionPane.showMessageDialog(null, "Recuerde cargar el archivo o comuniquese con servicio al cliente");
+        }
     }//GEN-LAST:event_buttonVerMatrizActionPerformed
 
-    private void verGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verGrafoActionPerformed
-        /*boolean band=true;
-        if(band){
-            PanelGrafica.repaint();
-            band=false;
-        }
-        ArrayList<numero> xAnt = new ArrayList<>();
-        ArrayList<numero> yAnt = new ArrayList<>();
-        numero p;
-        int x = 0;
-        int y = 0;
-        VentanaGrafo v = new VentanaGrafo();
-        prim obj = new prim();
-        int[][] matCostosF = obj.AlgPrim(matCostos, estaciones, 0);
-        v.llenarVectorXyY(matCostosF);
-        Graphics g = getGraphics();
-        for (int i = 0; i < estaciones.length; i++) {
-            v.setNombre(estaciones[i]);
-            if (i == 0) {
-                v.setX(v.CalcularX(i));
-                v.setY(v.CalcularY(i));
-                v.setVeces(i);
-                v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
-                p = new numero(v.getX());
-                xAnt.add(p);
-                p = new numero(v.getY());
-                yAnt.add(p);
-            } else {
-                v.setxAnterior(v.getX());
-                v.setyAnterior(v.getY());
-                x = v.CalcularX(i);
-                y = v.CalcularY(i);
-                v.setX(x);
-                v.setY(y);
-                v.setVeces(i);
-                v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
-                p = new numero(x);
-                xAnt.add(p);
-                p = new numero(y);
-                yAnt.add(p);
-            }
-        }
-        band=true;
-        */
-    }//GEN-LAST:event_verGrafoActionPerformed
+    private void verGrafoRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verGrafoRandomActionPerformed
 
-    private void verGrafoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verGrafoMouseClicked
-        ArrayList<numero> xAnt = new ArrayList<>();
-        ArrayList<numero> yAnt = new ArrayList<>();
-        numero p;
-        int x = 0;
-        int y = 0;
-        VentanaGrafo v = new VentanaGrafo();
-        prim obj = new prim();
-        int[][] matCostosF = obj.AlgPrim(matCostos, estaciones, 0);
-        v.llenarVectorXyY(matCostosF);
-        Graphics g = getGraphics();
-        for (int i = 0; i < estaciones.length; i++) {
-            v.setNombre(estaciones[i]);
-            if (i == 0) {
-                v.setX(v.CalcularX(i));
-                v.setY(v.CalcularY(i));
-                v.setVeces(i);
-                v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
-                p = new numero(v.getX());
-                xAnt.add(p);
-                p = new numero(v.getY());
-                yAnt.add(p);
+    }//GEN-LAST:event_verGrafoRandomActionPerformed
+
+    private void verGrafoRandomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verGrafoRandomMouseClicked
+        try {
+            if (banderita) {
+                ArrayList<numero> xAnt = new ArrayList<>();
+                ArrayList<numero> yAnt = new ArrayList<>();
+                numero p;
+                int x = 0;
+                int y = 0;
+                VentanaGrafo v = new VentanaGrafo();
+                v.setOption(1);
+                prim obj = new prim();
+                int[][] matCostosF = obj.AlgPrim(matCostos, estaciones, 0);
+                v.llenarVectorXyY(matCostosF);
+                Graphics g = getGraphics();
+                for (int i = 0; i < estaciones.length; i++) {
+                    v.setNombre(estaciones[i]);
+                    if (i == 0) {
+                        v.setX(v.CalcularX(i));
+                        v.setY(v.CalcularY(i));
+                        v.setVeces(i);
+                        v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
+                        p = new numero(v.getX());
+                        xAnt.add(p);
+                        p = new numero(v.getY());
+                        yAnt.add(p);
+                    } else {
+                        v.setxAnterior(v.getX());
+                        v.setyAnterior(v.getY());
+                        x = v.CalcularX(i);
+                        y = v.CalcularY(i);
+                        v.setX(x);
+                        v.setY(y);
+                        v.setVeces(i);
+                        v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
+                        p = new numero(x);
+                        xAnt.add(p);
+                        p = new numero(y);
+                        yAnt.add(p);
+                    }
+                }
+                banderita = false;
             } else {
-                v.setxAnterior(v.getX());
-                v.setyAnterior(v.getY());
-                x = v.CalcularX(i);
-                y = v.CalcularY(i);
-                v.setX(x);
-                v.setY(y);
-                v.setVeces(i);
-                v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
-                p = new numero(x);
-                xAnt.add(p);
-                p = new numero(y);
-                yAnt.add(p);
+                PanelGrafica.repaint();
+                banderita = true;
             }
+
+        } catch (Exception E) {
+            JOptionPane.showMessageDialog(null, "Recuerde cargar el archivo o comuniquese con servicio al cliente");
         }
-    }//GEN-LAST:event_verGrafoMouseClicked
+    }//GEN-LAST:event_verGrafoRandomMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String text = " \t.   Horario de atención 8:00-12:00 & 14:00-18:00 \n \t"
+                + "                 Tel: 01800046952\n \t"
+                + "        Email: soportesJJJ@udea.edu.com.co \n \t"
+                + "           Jose David Henao Gallego\n \t"
+                + "            Juan Andres Lema Tamayo \n \t"
+                + "           Jhon Sebastian Peñate Peña\n \t"
+                + "                     JJJ S.A";
+        JOptionPane.showMessageDialog(null, text);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void verGrafoFijoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verGrafoFijoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_verGrafoFijoMouseClicked
+
+    private void verGrafoFijoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verGrafoFijoActionPerformed
+        try {
+            if (banderita) {
+                ArrayList<numero> xAnt = new ArrayList<>();
+                ArrayList<numero> yAnt = new ArrayList<>();
+                numero p;
+                int x = 0;
+                int y = 0;
+                VentanaGrafo v = new VentanaGrafo();
+                v.setOption(0);
+                prim obj = new prim();
+                int[][] matCostosF = obj.AlgPrim(matCostos, estaciones, 0);
+                v.llenarVectorXyY(matCostosF);
+                Graphics g = getGraphics();
+                for (int i = 0; i < estaciones.length; i++) {
+                    v.setNombre(estaciones[i]);
+                    if (i == 0) {
+                        v.setX(v.CalcularX(i));
+                        v.setY(v.CalcularY(i));
+                        v.setVeces(i);
+                        v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
+                        p = new numero(v.getX());
+                        xAnt.add(p);
+                        p = new numero(v.getY());
+                        yAnt.add(p);
+                    } else {
+                        v.setxAnterior(v.getX());
+                        v.setyAnterior(v.getY());
+                        x = v.CalcularX(i);
+                        y = v.CalcularY(i);
+                        v.setX(x);
+                        v.setY(y);
+                        v.setVeces(i);
+                        v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
+                        p = new numero(x);
+                        xAnt.add(p);
+                        p = new numero(y);
+                        yAnt.add(p);
+                    }
+                }
+                banderita = false;
+            } else {
+                PanelGrafica.repaint();
+                banderita = true;
+            }
+
+        } catch (Exception E) {
+            JOptionPane.showMessageDialog(null, "Recuerde cargar el archivo o comuniquese con servicio al cliente");
+        }
+    }//GEN-LAST:event_verGrafoFijoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -977,6 +1049,7 @@ public class Estaciones extends javax.swing.JFrame {
                 new Estaciones().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -998,6 +1071,7 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JLabel icono;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1026,6 +1100,7 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JTextField textOrigen;
     private javax.swing.JPasswordField textpass;
     private javax.swing.JTextField textuser;
-    private javax.swing.JButton verGrafo;
+    private javax.swing.JButton verGrafoFijo;
+    private javax.swing.JButton verGrafoRandom;
     // End of variables declaration//GEN-END:variables
 }
