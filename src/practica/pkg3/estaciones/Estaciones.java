@@ -245,6 +245,8 @@ public class Estaciones extends javax.swing.JFrame {
         PanelGrafica = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        areamatriz = new javax.swing.JTextArea();
         Administracion = new javax.swing.JPanel();
         Bcarga = new javax.swing.JButton();
         Bedit = new javax.swing.JButton();
@@ -495,21 +497,32 @@ public class Estaciones extends javax.swing.JFrame {
             }
         });
 
+        areamatriz.setColumns(20);
+        areamatriz.setRows(5);
+        jScrollPane4.setViewportView(areamatriz);
+
         javax.swing.GroupLayout PanelGraficaLayout = new javax.swing.GroupLayout(PanelGrafica);
         PanelGrafica.setLayout(PanelGraficaLayout);
         PanelGraficaLayout.setHorizontalGroup(
             PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelGraficaLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jButton4)
-                .addGap(46, 46, 46)
-                .addComponent(jButton3)
-                .addContainerGap(558, Short.MAX_VALUE))
+                .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelGraficaLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(jButton4)
+                        .addGap(46, 46, 46)
+                        .addComponent(jButton3))
+                    .addGroup(PanelGraficaLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
         PanelGraficaLayout.setVerticalGroup(
             PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelGraficaLayout.createSequentialGroup()
-                .addContainerGap(474, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton3))
@@ -920,7 +933,7 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_BcancelarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       // areamatriz.setText(MostarMat(matCostos));
+        areamatriz.setText(MostarMat(matCostos));
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -931,23 +944,26 @@ public class Estaciones extends javax.swing.JFrame {
         int x=0;
         int y=0;
         VentanaGrafo v = new VentanaGrafo();
+        int[][]matCostosF= new int[matCostos.length][matCostos.length];
+        matCostosF =Algoritmo_Prim(matCostos);
+        v.llenarVectorXyY(matCostosF);
         Graphics g=getGraphics();
          for (int i = 0; i < estaciones.length; i++) {
             v.setNombre(estaciones[i]);
             if(i==0){
-              v.setX(v.CalcularX(xAnt, i));
-              v.setY(v.CalcularY(yAnt, i));
+              v.setX(v.CalcularX(i));
+              v.setY(v.CalcularY(i));
               v.setVeces(i);
               v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], i,v.getxAnterior(),v.getyAnterior());
-              p = new numero(200);
+              p = new numero(v.getX());
               xAnt.add(p);
-              p = new numero(100);
+              p = new numero(v.getY());
               yAnt.add(p);
             }else{
                 v.setxAnterior(v.getX());
                 v.setyAnterior(v.getY());
-                x = v.CalcularX(xAnt,i);
-                y = v.CalcularY(yAnt,i);
+                x = v.CalcularX(i);
+                y = v.CalcularY(i);
                 v.setX(x);
                 v.setY(y);
                 v.setVeces(i);
@@ -1018,6 +1034,7 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JTabbedPane administrar;
     private javax.swing.JTextArea areaListaE;
     private javax.swing.JTextArea areaRuta;
+    private javax.swing.JTextArea areamatriz;
     private javax.swing.JButton bClear;
     private javax.swing.JButton botonCalcular;
     private javax.swing.JLabel errorPass;
@@ -1043,6 +1060,7 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
