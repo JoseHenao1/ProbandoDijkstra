@@ -22,7 +22,6 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import static practica.pkg3.estaciones.Algoritmo_Prim.Algoritmo_Prim;
 
 
 /**
@@ -243,8 +242,6 @@ public class Estaciones extends javax.swing.JFrame {
         botonCalcular = new javax.swing.JButton();
         icono = new javax.swing.JLabel();
         PanelGrafica = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        areamatriz = new javax.swing.JTextArea();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         Administracion = new javax.swing.JPanel();
@@ -483,11 +480,6 @@ public class Estaciones extends javax.swing.JFrame {
 
         administrar.addTab("Ruta Metro", panelRuta);
 
-        areamatriz.setColumns(20);
-        areamatriz.setRows(5);
-        areamatriz.setEnabled(false);
-        jScrollPane4.setViewportView(areamatriz);
-
         jButton4.setText("ver Matriz");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -507,23 +499,16 @@ public class Estaciones extends javax.swing.JFrame {
         PanelGraficaLayout.setHorizontalGroup(
             PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelGraficaLayout.createSequentialGroup()
-                .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelGraficaLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton4)
-                        .addGap(46, 46, 46)
-                        .addComponent(jButton3))
-                    .addGroup(PanelGraficaLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(jButton4)
+                .addGap(46, 46, 46)
+                .addComponent(jButton3)
+                .addContainerGap(558, Short.MAX_VALUE))
         );
         PanelGraficaLayout.setVerticalGroup(
             PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelGraficaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(474, Short.MAX_VALUE)
                 .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton3))
@@ -934,48 +919,60 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_BcancelarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        areamatriz.setVisible(true);
-        areamatriz.setText(MostarMat(matCostos));
+       // areamatriz.setText(MostarMat(matCostos));
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         ArrayList<numero> xAnt = new ArrayList<>();
         ArrayList<numero> yAnt = new ArrayList<>();
         numero p;
-        int x=0;
-        int y=0;
+        int x;
+        int y;
         VentanaGrafo v = new VentanaGrafo();
-        Graphics g=getGraphics();
+         Graphics g = getGraphics();
+        JPanel vista = new JPanel();
          for (int i = 0; i < estaciones.length; i++) {
+            
             v.setNombre(estaciones[i]);
             if(i==0){
-              v.setX(v.CalcularX(xAnt, i));
-              v.setY(v.CalcularY(yAnt, i));
+              v.setX(200);
+              v.setY(100);
               v.setVeces(i);
-              v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], i,v.getxAnterior(),v.getyAnterior());
               p = new numero(200);
               xAnt.add(p);
               p = new numero(100);
               yAnt.add(p);
             }else{
-                v.setxAnterior(v.getX());
-                v.setyAnterior(v.getY());
                 x = v.CalcularX(xAnt,i);
                 y = v.CalcularY(yAnt,i);
                 v.setX(x);
                 v.setY(y);
                 v.setVeces(i);
-                v.pintarCirculo(g, x, y, estaciones[i], i,v.getxAnterior(),v.getyAnterior());
+               
+                v.paint(g);
                 p = new numero(x);
                 xAnt.add(p);
                 p = new numero(y);
                 yAnt.add(p);
+                vista = v.getLienzo();
+                v.setLienzo(vista);
             }
             
+            v.setVisible(true);
         }
-        int[][] matCostosFinal=Algoritmo_Prim(matCostos);
+         
         
-        
+         /*lienzo = new JFrame();
+         this.pin = new JPanel();
+         this.lienzo.setVisible(true);
+         this.lienzo.setSize(750,540);
+         this.pin.setSize(750, 540);
+         this.pin.setBackground(Color.red);
+         this.lienzo.add(this.pin);
+         this.pin.setEnabled(true);
+         this.pin.setVisible(true);
+         Pintador.pintarCirculo(this.pin.getGraphics(),10,10,"puta");
+         */
          
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -1037,7 +1034,6 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JTabbedPane administrar;
     private javax.swing.JTextArea areaListaE;
     private javax.swing.JTextArea areaRuta;
-    private javax.swing.JTextArea areamatriz;
     private javax.swing.JButton bClear;
     private javax.swing.JButton botonCalcular;
     private javax.swing.JLabel errorPass;
@@ -1063,7 +1059,6 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
