@@ -19,7 +19,9 @@ public class Distancias {
         this.estacionD = estacionD;
         this.distancia = distancia;
     }
-   
+
+    public Distancias() {
+    }
 
     public int getEstacinO() {
         return estacinO;
@@ -44,5 +46,8 @@ public class Distancias {
     public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
-   
+    public static void main(String[] args){
+        Distancias obj = new Distancias();
+        obj.getDistancia();
+    }
 }
