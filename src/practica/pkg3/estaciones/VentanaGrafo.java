@@ -234,14 +234,14 @@ public class VentanaGrafo extends javax.swing.JFrame {
     }
      */
     public static void pintarCirculo(Graphics g, int x, int y, String estacion, int[][] matrizCostos, int xAnterior, int yAnterior) {
-        ((Graphics2D) g).setColor(Color.blue);
+        ((Graphics2D) g).setColor(Color.darkGray);
         ((Graphics2D) g).setStroke(new BasicStroke(3));//leda el grosor al circulo        
         ((Graphics2D) g).fillOval(x, y, 30, 30);
-        ((Graphics2D) g).setColor(Color.BLACK);
+        ((Graphics2D) g).setColor(Color.ORANGE);
         ((Graphics2D) g).drawOval(x, y, 30, 30);
 
-        ((Graphics2D) g).setColor(Color.BLACK);
-        Font fuente = new Font("Monospaced", Font.BOLD, 12);
+        ((Graphics2D) g).setColor(Color.black);
+        Font fuente = new Font("Monospaced", Font.BOLD, 20);
         g.setFont(fuente);
         ((Graphics2D) g).drawString(estacion, x - 20, y);
 
@@ -275,8 +275,8 @@ public class VentanaGrafo extends javax.swing.JFrame {
         if (y1 >= y2) {
             yAux = ((y1 - y2) / 2) + y2;
         }
-        ((Graphics2D) g).setColor(Color.black);
-        Font fuente = new Font("Monospaced", Font.PLAIN, 12);
+        ((Graphics2D) g).setColor(Color.BLUE);
+        Font fuente = new Font("Monospaced", Font.BOLD, 20);
         g.setFont(fuente);
         ((Graphics2D) g).drawString(String.valueOf(tam), xAux, yAux);
     }
