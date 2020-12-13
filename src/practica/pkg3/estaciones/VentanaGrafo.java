@@ -37,6 +37,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
     public int [] ys;
     int xAnterior;
     int yAnterior;
+    Distancias[] distancias;
 
     public int getVeces() {
         return veces;
@@ -96,17 +97,22 @@ public class VentanaGrafo extends javax.swing.JFrame {
     
     public void llenarVectorXyY(int[][] matrizInicial) {
         int controlD = 0;
+        int cont = 0;
+        distancias = new Distancias[matrizInicial.length-1];
         for (int i = 0; i < matrizInicial.length; i++) {
             for (int j = 0; j < matrizInicial.length; j++) {
                 if (j+controlD<matrizInicial.length) {
                     if (matrizInicial[i][controlD + j] != 0) {
-                        
+                        Distancias di = new Distancias(i,(controlD + j),(matrizInicial[i][controlD + j]));
+                        distancias[cont] = di ;
+                        cont++;
                     }
                 }
 
             }
             controlD++;
         }
+        
     }
 
     public VentanaGrafo() {
