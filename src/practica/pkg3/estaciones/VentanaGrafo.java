@@ -202,10 +202,10 @@ public class VentanaGrafo extends javax.swing.JFrame {
             } else if (this.getOption() == 0) {
                 if (x == 0) {
                     vX[x] = 100;
-                    vY[x] = 130;
+                    vY[x] = 100;
                 } else if ((x+1) % 3 == 0) {
                     vX[x] = 100;
-                    vY[x] = vY[x - 1] + 113;
+                    vY[x] = vY[x - 1] + 100;
                 } else {
                     vX[x] = vX[x - 1] + 280;
                     vY[x] = vY[x - 1];
