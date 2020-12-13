@@ -32,9 +32,9 @@ public class VentanaGrafo extends javax.swing.JFrame {
     private int radio = 10;
     private int diametro = 20;
     //public int[] xs = {200, 220, 180, 240, 160, 260, 140, 280, 120, 300};
-    public int[] xs= new int[100];
+    public int[] xs;
     //public int[] ys = {100, 120, 140, 160, 180, 200, 220, 240, 260, 280};
-    public int [] ys= new int[100];
+    public int [] ys;
     int xAnterior;
     int yAnterior;
     Distancias[] distancias;
@@ -123,6 +123,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
     public void llenarVectorXyY(int[][] matrizInicial) {
         int controlD = 0;
         int cont = 0;
+        Random aleatorio = new Random();
         int [] vX = new int[matrizInicial.length];
         int [] vY = new int[matrizInicial.length];
         distancias = new Distancias[matrizInicial.length];
@@ -130,7 +131,8 @@ public class VentanaGrafo extends javax.swing.JFrame {
             for (int j = 0; j < matrizInicial.length; j++) {
                 if (j+controlD<matrizInicial.length) {
                     if (matrizInicial[i][controlD + j] != 0) {
-                        distancias[cont] = new Distancias(i,(controlD + j),(matrizInicial[i][controlD + j]));
+                        Distancias d = new Distancias(i,(controlD + j),(matrizInicial[i][controlD + j]));
+                        distancias[cont] = d ;
                         cont++;
                     }
                 }
@@ -139,16 +141,58 @@ public class VentanaGrafo extends javax.swing.JFrame {
             controlD++;
         }
         int xyz;
+        numero p;
+         ArrayList<numero> xAnt = new ArrayList<>();
+        ArrayList<numero> yAnt = new ArrayList<>();
         for(int x=0;x<vX.length;x++){
+             int distX;
+             int distY;
+              //if(distancias[x]!=null){
+               //dist  = distancias[x].getDistancia();
+               distX = aleatorio.nextInt(600);
+               distY = aleatorio.nextInt(400);
+            
+            
+            
             if(x==0){
-                vX[x]=400;
-                vY[x]=100;
+                vX[x]=200;
+                vY[x]=300;
             }else if(x%2==0){
-                vX[x]=(distancias[x].getDistancia()+150);
-                vY[x]=(distancias[x].getDistancia()+50);
+                int nuevoX = distX;
+                int nuevoY = distY;
+                if(noEsta(nuevoX, xAnt)){
+                    vX[x]= nuevoX+60;
+                }else{
+                   vX[x]= nuevoX+80;
+                }
+                 if(noEsta(nuevoY, yAnt)){
+                    vY[x]= nuevoY+60;
+                }else{
+                   vY[x]= nuevoY+80;
+                }
+                     
+                p = new numero(nuevoX);
+                xAnt.add(p);
+                p = new numero(nuevoY);
+                yAnt.add(p);
             }else if(x%2==1){
-                vX[x]=(distancias[x].getDistancia()+25);
-                vY[x]=(distancias[x].getDistancia()+20);
+                int nuevoX = distX;
+                int nuevoY = distY;
+                if(noEsta(nuevoX, xAnt)){
+                    vX[x]= nuevoX+60;
+                }else{
+                   vX[x]= nuevoX+60;
+                }
+                 if(noEsta(nuevoY, yAnt)){
+                    vY[x]= nuevoY+60;
+                }else{
+                   vY[x]= nuevoY+50;
+                }
+                     
+                p = new numero(nuevoX);
+                xAnt.add(p);
+                p = new numero(nuevoY);
+                yAnt.add(p);
             }
         }
         this.setXs(vX);
@@ -178,7 +222,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
         //g.drawOval(x, y-10, 20, 20);
 
         if (veces > 0) {
-            pintarLinea(g, xAnterior + 10, yAnterior + 10, x + 10, y + 10, 0);
+            //pintarLinea(g, xAnterior + 10, yAnterior + 10, x + 10, y + 10, 0);
         }
         ((Graphics2D) g).setColor(Color.blue);
         ((Graphics2D) g).setStroke(new BasicStroke(3));//leda el grosor al circulo        

@@ -30,6 +30,7 @@ public class Algoritmo_Prim
         /**
         Estructuras para ejecutar algoritmo de Prim
         */
+        
         for(Integer contadorpuntoevaluado = 0;contadorpuntoevaluado < MatrizOriginal[0].length;contadorpuntoevaluado++)
         {
             for(Integer contadorAdyacentes = 0;contadorAdyacentes < MatrizOriginal[0].length;contadorAdyacentes++)
