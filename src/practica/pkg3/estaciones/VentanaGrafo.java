@@ -25,13 +25,18 @@ public class VentanaGrafo extends javax.swing.JFrame {
      * Creates new form VentanaGrafo
      */
     JPanel lienzo;
-    Pintador pint;
     private int x;
     private int y;
     private int veces;
     private String nombre;
     private int radio = 10;
     private int diametro = 20;
+    //public int[] xs = {200, 220, 180, 240, 160, 260, 140, 280, 120, 300};
+    public int[] xs;
+    //public int[] ys = {100, 120, 140, 160, 180, 200, 220, 240, 260, 280};
+    public int [] ys;
+    int xAnterior;
+    int yAnterior;
 
     public int getVeces() {
         return veces;
@@ -40,7 +45,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
     public void setVeces(int veces) {
         this.veces = veces;
     }
-    
+
     public int getX() {
         return x;
     }
@@ -65,7 +70,6 @@ public class VentanaGrafo extends javax.swing.JFrame {
         this.nombre = nombre;
     }
 
-    
     public JPanel getLienzo() {
         return lienzo;
     }
@@ -73,93 +77,125 @@ public class VentanaGrafo extends javax.swing.JFrame {
     public void setLienzo(JPanel lienzo) {
         this.lienzo = lienzo;
     }
+
+    public int getxAnterior() {
+        return xAnterior;
+    }
+
+    public void setxAnterior(int xAnterior) {
+        this.xAnterior = xAnterior;
+    }
+
+    public int getyAnterior() {
+        return yAnterior;
+    }
+
+    public void setyAnterior(int yAnterior) {
+        this.yAnterior = yAnterior;
+    }
     
+    public void llenarVectorXyY(int[][] matrizInicial) {
+        int controlD = 0;
+        for (int i = 0; i < matrizInicial.length; i++) {
+            for (int j = 0; j < matrizInicial.length; j++) {
+                if (j+controlD<matrizInicial.length) {
+                    if (matrizInicial[i][controlD + j] != 0) {
+                        
+                    }
+                }
+
+            }
+            controlD++;
+        }
+    }
+
     public VentanaGrafo() {
         initComponents();
         this.setLocationRelativeTo(null);
         lienzo = new JPanel();
-        lienzo.setBounds(WIDTH, WIDTH, 826,540);
+        this.setBounds(WIDTH, WIDTH, 826, 540);
         lienzo.setBackground(Color.WHITE);
         //repaint();
-        
+
     }
+
     @Override
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         super.paint(g);
-        pintarCirculo(g,x,y,nombre,veces);
+        pintarCirculo(g, x, y, nombre, veces,xAnterior,yAnterior);
     }
-    public static void pintarCirculo(Graphics g,int x,int y,String estacion,int veces){
+
+    public static void pintarCirculo(Graphics g, int x, int y, String estacion, int veces, int xAnterior,int yAnterior) {
         //g.drawOval(x, y-10, 20, 20);
-        int xAnterior=0;
-        int yAnterior=0;
-        
-        
-            if (veces > 0) {
-                pintarLinea(g, xAnterior+10, yAnterior+10, x+10, y+10,0);
-            }
-            ((Graphics2D) g).setColor(Color.blue);
-                ((Graphics2D) g).setStroke(new BasicStroke(3));//leda el grosor al circulo        
-                ((Graphics2D) g).fillOval(x, y, 20, 20);
-                ((Graphics2D) g).setColor(Color.BLACK);
-                ((Graphics2D) g).drawOval(x, y, 20, 20);
 
-                ((Graphics2D) g).setColor(Color.ORANGE);
-                Font fuente = new Font("Monospaced", Font.BOLD, 12);
-                g.setFont(fuente);
-                ((Graphics2D) g).drawString(estacion, x - 20, y);
-               
-                
-            
-        
+        if (veces > 0) {
+            pintarLinea(g, xAnterior + 10, yAnterior + 10, x + 10, y + 10, 0);
+        }
+        ((Graphics2D) g).setColor(Color.blue);
+        ((Graphics2D) g).setStroke(new BasicStroke(3));//leda el grosor al circulo        
+        ((Graphics2D) g).fillOval(x, y, 20, 20);
+        ((Graphics2D) g).setColor(Color.BLACK);
+        ((Graphics2D) g).drawOval(x, y, 20, 20);
 
-         
-    }    
-    public static void pintarLinea(Graphics g, int x1,int y1,int x2,int y2,int tam){
-        int xAux = 0; int yAux = 0; 
-        ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_ANTIALIASING,  RenderingHints.VALUE_ANTIALIAS_ON);
-        BasicStroke stroke = new BasicStroke(2);
-        ((Graphics2D)g).setStroke(stroke);         
-       ((Graphics2D)g).drawLine(x1+10, y1+10, x2+10, y2+10);
-       if(x1<=x2)
-           xAux=((x2-x1)/2)+x1;       
-        if(x1>x2)
-           xAux=((x1-x2)/2)+x2;
-        if(y1<y2)
-           yAux=((y2-y1)/2)+y1;
-        if(y1>=y2)
-            yAux=((y1-y2)/2)+y2;        
-        // ((Graphics2D)g).setColor(Color.black);
-        Font fuente=new Font("Monospaced",Font.PLAIN, 12);
+        ((Graphics2D) g).setColor(Color.ORANGE);
+        Font fuente = new Font("Monospaced", Font.BOLD, 12);
         g.setFont(fuente);
-      ((Graphics2D)g).drawString(String.valueOf(tam), xAux, yAux);
-  } 
-    public int CalcularX(ArrayList<numero> l) {
+        ((Graphics2D) g).drawString(estacion, x - 20, y);
+
+    }
+
+    public static void pintarLinea(Graphics g, int x1, int y1, int x2, int y2, int tam) {
+        int xAux = 0;
+        int yAux = 0;
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        BasicStroke stroke = new BasicStroke(2);
+        ((Graphics2D) g).setStroke(stroke);
+        ((Graphics2D) g).drawLine(x1 + 10, y1 + 10, x2 + 10, y2 + 10);
+        if (x1 <= x2) {
+            xAux = ((x2 - x1) / 2) + x1;
+        }
+        if (x1 > x2) {
+            xAux = ((x1 - x2) / 2) + x2;
+        }
+        if (y1 < y2) {
+            yAux = ((y2 - y1) / 2) + y1;
+        }
+        if (y1 >= y2) {
+            yAux = ((y1 - y2) / 2) + y2;
+        }
+        // ((Graphics2D)g).setColor(Color.black);
+        Font fuente = new Font("Monospaced", Font.PLAIN, 12);
+        g.setFont(fuente);
+        ((Graphics2D) g).drawString(String.valueOf(tam), xAux, yAux);
+    }
+
+    public int CalcularX(ArrayList<numero> l,int i) {
+        int salida = 0;
+        /*Random aleatorio = new Random();
+        salida = aleatorio.nextInt(800);
+        if (noEsta(salida, l)) {
+            return 0;
+        } else {
+            return salida;
+        }*/
+        salida=xs[i];
+        return salida;
+    }
+
+    public int CalcularY(ArrayList<numero> l,int i) {
         int salida;
-        Random aleatorio = new Random();
-        salida = aleatorio.nextInt(getX() + 60);
+        /*Random aleatorio = new Random();
+        salida = aleatorio.nextInt(500);
         if (noEsta(salida, l)) {
             return 0;
         } else {
             return salida;
-        }
-
+        }*/
+        salida=ys[i];
+        return salida;
     }
-    public int CalcularY(ArrayList<numero> l){
-            int salida;
-        Random aleatorio = new Random();
-        salida = aleatorio.nextInt(getY() + 60);
-        if (noEsta(salida, l)) {
-            return 0;
-        } else {
-            return salida;
-        }
 
-    }
-    
-    
-    
-    
-    public boolean noEsta(int numero,ArrayList<numero> l){
+    public boolean noEsta(int numero, ArrayList<numero> l) {
         boolean salida = false;
         for (numero object : l) {
             if (numero == object.getValor()) {
@@ -171,8 +207,6 @@ public class VentanaGrafo extends javax.swing.JFrame {
         }
         return salida;
     }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -197,8 +231,6 @@ public class VentanaGrafo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

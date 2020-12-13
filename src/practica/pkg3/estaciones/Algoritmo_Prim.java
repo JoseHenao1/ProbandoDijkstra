@@ -131,6 +131,8 @@ public class Algoritmo_Prim
         *Invokamos la funcion Prim y le pasamos como parametro la matriz a la cual aplicaremos
         * el algoritmo de Prim
         */
+        
+        
         int [][] MatrizFinal = Algoritmo_Prim(MMatrizOriginal);
         
         /**
@@ -145,6 +147,7 @@ public class Algoritmo_Prim
             }
             System.out.println();
         }
+        
     }
     
 }

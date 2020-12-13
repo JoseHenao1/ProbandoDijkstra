@@ -22,6 +22,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import static practica.pkg3.estaciones.Algoritmo_Prim.Algoritmo_Prim;
 
 
 /**
@@ -484,6 +485,7 @@ public class Estaciones extends javax.swing.JFrame {
 
         areamatriz.setColumns(20);
         areamatriz.setRows(5);
+        areamatriz.setEnabled(false);
         jScrollPane4.setViewportView(areamatriz);
 
         jButton4.setText("ver Matriz");
@@ -932,6 +934,7 @@ public class Estaciones extends javax.swing.JFrame {
     }//GEN-LAST:event_BcancelarActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        areamatriz.setVisible(true);
         areamatriz.setText(MostarMat(matCostos));
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -939,47 +942,40 @@ public class Estaciones extends javax.swing.JFrame {
         ArrayList<numero> xAnt = new ArrayList<>();
         ArrayList<numero> yAnt = new ArrayList<>();
         numero p;
-        int x;
-        int y;
-        
+        int x=0;
+        int y=0;
+        VentanaGrafo v = new VentanaGrafo();
+        Graphics g=getGraphics();
          for (int i = 0; i < estaciones.length; i++) {
-            VentanaGrafo v = new VentanaGrafo();
             v.setNombre(estaciones[i]);
             if(i==0){
-              v.setX(200);
-              v.setY(100);
+              v.setX(v.CalcularX(xAnt, i));
+              v.setY(v.CalcularY(yAnt, i));
               v.setVeces(i);
+              v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], i,v.getxAnterior(),v.getyAnterior());
               p = new numero(200);
               xAnt.add(p);
               p = new numero(100);
               yAnt.add(p);
             }else{
-                x = v.CalcularX(xAnt);
-                y = v.CalcularY(yAnt);
+                v.setxAnterior(v.getX());
+                v.setyAnterior(v.getY());
+                x = v.CalcularX(xAnt,i);
+                y = v.CalcularY(yAnt,i);
                 v.setX(x);
                 v.setY(y);
                 v.setVeces(i);
+                v.pintarCirculo(g, x, y, estaciones[i], i,v.getxAnterior(),v.getyAnterior());
                 p = new numero(x);
                 xAnt.add(p);
                 p = new numero(y);
                 yAnt.add(p);
             }
             
-            v.setVisible(true);
         }
-         
+        int[][] matCostosFinal=Algoritmo_Prim(matCostos);
         
-         /*lienzo = new JFrame();
-         this.pin = new JPanel();
-         this.lienzo.setVisible(true);
-         this.lienzo.setSize(750,540);
-         this.pin.setSize(750, 540);
-         this.pin.setBackground(Color.red);
-         this.lienzo.add(this.pin);
-         this.pin.setEnabled(true);
-         this.pin.setVisible(true);
-         Pintador.pintarCirculo(this.pin.getGraphics(),10,10,"puta");
-         */
+        
          
     }//GEN-LAST:event_jButton3ActionPerformed
 
