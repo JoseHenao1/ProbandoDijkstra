@@ -32,9 +32,9 @@ public class VentanaGrafo extends javax.swing.JFrame {
     private int radio = 10;
     private int diametro = 20;
     //public int[] xs = {200, 220, 180, 240, 160, 260, 140, 280, 120, 300};
-    public int[] xs;
+    public static int[] xs;
     //public int[] ys = {100, 120, 140, 160, 180, 200, 220, 240, 260, 280};
-    public int [] ys;
+    public static int [] ys;
     int xAnterior;
     int yAnterior;
     Distancias[] distancias;
@@ -46,7 +46,6 @@ public class VentanaGrafo extends javax.swing.JFrame {
     public void setDistancias(Distancias[] distancias) {
         this.distancias = distancias;
     }
-
     
     public int getVeces() {
         return veces;
@@ -145,7 +144,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
          ArrayList<numero> xAnt = new ArrayList<>();
         ArrayList<numero> yAnt = new ArrayList<>();
         for(int x=0;x<vX.length;x++){
-             int distX;
+            /* int distX;
              int distY;
               //if(distancias[x]!=null){
                //dist  = distancias[x].getDistancia();
@@ -193,11 +192,20 @@ public class VentanaGrafo extends javax.swing.JFrame {
                 xAnt.add(p);
                 p = new numero(nuevoY);
                 yAnt.add(p);
+            }*/
+            if (x==0){
+                vX[x] = 100;
+                vY[x] = 130;
+            }else if(x%3==0){
+                vX[x] = 100;
+                vY[x] =vY[x-1]+113;
+            }else{
+                vX[x] = vX[x-1]+280;
+                vY[x] = vY[x-1];
             }
         }
         this.setXs(vX);
-        this.setYs(vY);
-        
+        this.setYs(vY); 
         //getDistancias()[i].getEstacinO() == 0
         
     }
@@ -212,17 +220,30 @@ public class VentanaGrafo extends javax.swing.JFrame {
 
     }
 
-    @Override
+    /*@Override
     public void paint(Graphics g) {
         super.paint(g);
         pintarCirculo(g, x, y, nombre, veces,xAnterior,yAnterior);
     }
+    */
 
-    public static void pintarCirculo(Graphics g, int x, int y, String estacion, int veces, int xAnterior,int yAnterior) {
+    public static void pintarCirculo(Graphics g, int x, int y, String estacion, int[][]matrizCostos, int xAnterior,int yAnterior) {
         //g.drawOval(x, y-10, 20, 20);
 
-        if (veces > 0) {
+       /* if (veces > 0) {
             //pintarLinea(g, xAnterior + 10, yAnterior + 10, x + 10, y + 10, 0);
+        }*/
+       int controlD=0;
+        for (int i = 0; i <matrizCostos.length; i++) {
+            for (int j = 0; j < matrizCostos.length; j++) {
+                if (j+controlD<matrizCostos.length) {
+                    if (matrizCostos[i][controlD + j] != 0) {
+                        pintarLinea(g, xs[i], ys[i], xs[j+1], ys[j+1], matrizCostos[i][j]);
+                    }
+                }
+
+            }
+            controlD++;
         }
         ((Graphics2D) g).setColor(Color.blue);
         ((Graphics2D) g).setStroke(new BasicStroke(3));//leda el grosor al circulo        
@@ -256,7 +277,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
         if (y1 >= y2) {
             yAux = ((y1 - y2) / 2) + y2;
         }
-        // ((Graphics2D)g).setColor(Color.black);
+         ((Graphics2D)g).setColor(Color.black);
         Font fuente = new Font("Monospaced", Font.PLAIN, 12);
         g.setFont(fuente);
         ((Graphics2D) g).drawString(String.valueOf(tam), xAux, yAux);
