@@ -144,7 +144,7 @@ public class VentanaGrafo extends javax.swing.JFrame {
          ArrayList<numero> xAnt = new ArrayList<>();
         ArrayList<numero> yAnt = new ArrayList<>();
         for(int x=0;x<vX.length;x++){
-            /* int distX;
+             int distX;
              int distY;
               //if(distancias[x]!=null){
                //dist  = distancias[x].getDistancia();
@@ -160,14 +160,14 @@ public class VentanaGrafo extends javax.swing.JFrame {
                 int nuevoX = distX;
                 int nuevoY = distY;
                 if(noEsta(nuevoX, xAnt)){
-                    vX[x]= nuevoX+60;
+                    vX[x]= nuevoX+140;
                 }else{
-                   vX[x]= nuevoX+80;
+                   vX[x]= nuevoX+120;
                 }
                  if(noEsta(nuevoY, yAnt)){
-                    vY[x]= nuevoY+60;
+                    vY[x]= nuevoY+140;
                 }else{
-                   vY[x]= nuevoY+80;
+                   vY[x]= nuevoY+120;
                 }
                      
                 p = new numero(nuevoX);
@@ -178,22 +178,22 @@ public class VentanaGrafo extends javax.swing.JFrame {
                 int nuevoX = distX;
                 int nuevoY = distY;
                 if(noEsta(nuevoX, xAnt)){
-                    vX[x]= nuevoX+60;
+                    vX[x]= nuevoX+140;
                 }else{
-                   vX[x]= nuevoX+60;
+                   vX[x]= nuevoX+140;
                 }
                  if(noEsta(nuevoY, yAnt)){
-                    vY[x]= nuevoY+60;
+                    vY[x]= nuevoY+140;
                 }else{
-                   vY[x]= nuevoY+50;
+                   vY[x]= nuevoY+100;
                 }
                      
                 p = new numero(nuevoX);
                 xAnt.add(p);
                 p = new numero(nuevoY);
                 yAnt.add(p);
-            }*/
-            if (x==0){
+            }
+            /*if (x==0){
                 vX[x] = 100;
                 vY[x] = 130;
             }else if(x%3==0){
@@ -202,11 +202,10 @@ public class VentanaGrafo extends javax.swing.JFrame {
             }else{
                 vX[x] = vX[x-1]+280;
                 vY[x] = vY[x-1];
-            }
+            }*/
         }
         this.setXs(vX);
         this.setYs(vY); 
-        //getDistancias()[i].getEstacinO() == 0
         
     }
 
@@ -227,34 +226,26 @@ public class VentanaGrafo extends javax.swing.JFrame {
     }
     */
 
-    public static void pintarCirculo(Graphics g, int x, int y, String estacion, int[][]matrizCostos, int xAnterior,int yAnterior) {
-        //g.drawOval(x, y-10, 20, 20);
-
-       /* if (veces > 0) {
-            //pintarLinea(g, xAnterior + 10, yAnterior + 10, x + 10, y + 10, 0);
-        }*/
-       int controlD=0;
-        for (int i = 0; i <matrizCostos.length; i++) {
-            for (int j = 0; j < matrizCostos.length; j++) {
-                if (j+controlD<matrizCostos.length) {
-                    if (matrizCostos[i][controlD + j] != 0) {
-                        pintarLinea(g, xs[i], ys[i], xs[j+1], ys[j+1], matrizCostos[i][j]);
-                    }
-                }
-
-            }
-            controlD++;
-        }
+    public static void pintarCirculo(Graphics g, int x, int y, String estacion, int[][] matrizCostos, int xAnterior, int yAnterior) {
         ((Graphics2D) g).setColor(Color.blue);
         ((Graphics2D) g).setStroke(new BasicStroke(3));//leda el grosor al circulo        
-        ((Graphics2D) g).fillOval(x, y, 20, 20);
+        ((Graphics2D) g).fillOval(x, y, 30, 30);
         ((Graphics2D) g).setColor(Color.BLACK);
-        ((Graphics2D) g).drawOval(x, y, 20, 20);
+        ((Graphics2D) g).drawOval(x, y, 30, 30);
 
-        ((Graphics2D) g).setColor(Color.ORANGE);
+        ((Graphics2D) g).setColor(Color.BLACK);
         Font fuente = new Font("Monospaced", Font.BOLD, 12);
         g.setFont(fuente);
         ((Graphics2D) g).drawString(estacion, x - 20, y);
+        
+        for (int i = 0; i < matrizCostos.length; i++) {
+            for (int j = 0; j < matrizCostos.length; j++) {
+                if (matrizCostos[i][j] != 0) {
+                    pintarLinea(g, xs[i], ys[i], xs[j], ys[j], matrizCostos[i][j]);
+                }
+
+            }
+        }
 
     }
 

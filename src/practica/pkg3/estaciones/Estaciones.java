@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import static practica.pkg3.estaciones.Algoritmo_Prim.Algoritmo_Prim;
-
 
 /**
  *
@@ -245,8 +243,9 @@ public class Estaciones extends javax.swing.JFrame {
         botonCalcular = new javax.swing.JButton();
         icono = new javax.swing.JLabel();
         PanelGrafica = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        buttonVerMatriz = new javax.swing.JButton();
+        verGrafo = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         Administracion = new javax.swing.JPanel();
         Bcarga = new javax.swing.JButton();
         Bedit = new javax.swing.JButton();
@@ -311,30 +310,39 @@ public class Estaciones extends javax.swing.JFrame {
         });
 
         panelRuta.setBackground(new java.awt.Color(255, 255, 255));
+        panelRuta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Yu Mincho Demibold", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 51));
         jLabel1.setText("Metro UdeA");
+        panelRuta.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel2.setText("Estacion de partida:");
+        panelRuta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 79, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jLabel3.setText("Estacion de destino:");
+        panelRuta.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
         textOrigen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textOrigenActionPerformed(evt);
             }
         });
+        panelRuta.add(textOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 79, 130, -1));
+        panelRuta.add(textDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 123, 130, -1));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("Listado de Estaciones");
+        panelRuta.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, -1, -1));
 
         areaListaE.setEditable(false);
         areaListaE.setColumns(20);
         areaListaE.setRows(5);
         jScrollPane1.setViewportView(areaListaE);
+
+        panelRuta.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(436, 59, 290, 150));
 
         bClear.setBackground(new java.awt.Color(0, 102, 0));
         bClear.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -344,17 +352,22 @@ public class Estaciones extends javax.swing.JFrame {
                 bClearActionPerformed(evt);
             }
         });
+        panelRuta.add(bClear, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 469, 130, 40));
 
         areaRuta.setColumns(20);
         areaRuta.setFont(new java.awt.Font("Kalinga", 1, 24)); // NOI18N
         areaRuta.setRows(5);
         jScrollPane2.setViewportView(areaRuta);
 
+        panelRuta.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 329, 500, 120));
+
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel5.setText("La mejor ruta para llegar a su destino es: ");
+        panelRuta.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 289, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel6.setText("Distancia a recorrer: ");
+        panelRuta.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 289, -1, -1));
 
         textDistancia.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         textDistancia.addActionListener(new java.awt.event.ActionListener() {
@@ -362,8 +375,10 @@ public class Estaciones extends javax.swing.JFrame {
                 textDistanciaActionPerformed(evt);
             }
         });
+        panelRuta.add(textDistancia, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 329, 150, 120));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        panelRuta.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 269, 660, 10));
 
         jButton2.setBackground(new java.awt.Color(0, 102, 0));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -373,6 +388,7 @@ public class Estaciones extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        panelRuta.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 219, 120, 40));
 
         botonCalcular.setBackground(new java.awt.Color(0, 102, 0));
         botonCalcular.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -382,141 +398,38 @@ public class Estaciones extends javax.swing.JFrame {
                 botonCalcularActionPerformed(evt);
             }
         });
+        panelRuta.add(botonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 167, 130, 40));
 
         icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/metro.png"))); // NOI18N
-
-        javax.swing.GroupLayout panelRutaLayout = new javax.swing.GroupLayout(panelRuta);
-        panelRuta.setLayout(panelRutaLayout);
-        panelRutaLayout.setHorizontalGroup(
-            panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel1))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelRutaLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(7, 7, 7)
-                        .addComponent(textOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRutaLayout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(textDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRutaLayout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(botonCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(126, 126, 126)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(530, 530, 530)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel5)
-                .addGap(158, 158, 158)
-                .addComponent(jLabel6))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(textDistancia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel3))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(520, 520, 520)
-                .addComponent(jLabel4))
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(icono))
-        );
-        panelRutaLayout.setVerticalGroup(
-            panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRutaLayout.createSequentialGroup()
-                .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelRutaLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1)
-                        .addGap(2, 2, 2)
-                        .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelRutaLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(textOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(20, 20, 20)
-                                .addComponent(textDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(botonCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(16, 16, 16)
-                        .addGroup(panelRutaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textDistancia, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRutaLayout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(jLabel3))
-                    .addGroup(panelRutaLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel4))
-                    .addGroup(panelRutaLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(icono, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        panelRuta.add(icono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 602));
 
         administrar.addTab("Ruta Metro", panelRuta);
 
-        jButton4.setText("ver Matriz");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        PanelGrafica.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        buttonVerMatriz.setText("ver Matriz");
+        buttonVerMatriz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                buttonVerMatrizActionPerformed(evt);
             }
         });
+        PanelGrafica.add(buttonVerMatriz, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, -1, -1));
 
-        jButton3.setText("Grafo");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+        verGrafo.setText("Grafo");
+        verGrafo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verGrafoMouseClicked(evt);
             }
         });
+        verGrafo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verGrafoActionPerformed(evt);
+            }
+        });
+        PanelGrafica.add(verGrafo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 490, -1, -1));
 
-        javax.swing.GroupLayout PanelGraficaLayout = new javax.swing.GroupLayout(PanelGrafica);
-        PanelGrafica.setLayout(PanelGraficaLayout);
-        PanelGraficaLayout.setHorizontalGroup(
-            PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelGraficaLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jButton4)
-                .addGap(46, 46, 46)
-                .addComponent(jButton3)
-                .addContainerGap(565, Short.MAX_VALUE))
-        );
-        PanelGraficaLayout.setVerticalGroup(
-            PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelGraficaLayout.createSequentialGroup()
-                .addContainerGap(474, Short.MAX_VALUE)
-                .addGroup(PanelGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
-                .addGap(33, 33, 33))
-        );
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mapaM2.jpg"))); // NOI18N
+        PanelGrafica.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 535));
 
         administrar.addTab("Grafica", PanelGrafica);
 
@@ -636,7 +549,7 @@ public class Estaciones extends javax.swing.JFrame {
                 .addGap(41, 41, 41))
         );
 
-        Administracion.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, 520));
+        Administracion.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, 530));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -799,10 +712,10 @@ public class Estaciones extends javax.swing.JFrame {
             String destino = textDestino.getText();
             String result;
             String rutaFinal = "";
-            String distancia="";
+            String distancia = "";
             int orig = 0;
             int dest = 0;
-            int dist=0;
+            int dist = 0;
             String[] ruta = new String[estaciones.length];
             boolean band = true;
             boolean band2 = true;
@@ -815,7 +728,7 @@ public class Estaciones extends javax.swing.JFrame {
             }
             if (isNumeric(origen)) {
                 int aux1 = Integer.parseInt(origen);
-                aux1=aux1-1;
+                aux1 = aux1 - 1;
                 if (aux1 <= estaciones.length) {
                     orig = aux1;
                 } else {
@@ -838,7 +751,7 @@ public class Estaciones extends javax.swing.JFrame {
 
             if (isNumeric(destino)) {
                 int aux2 = Integer.parseInt(destino);
-                aux2=aux2-1;
+                aux2 = aux2 - 1;
                 if (aux2 < estaciones.length) {
                     dest = aux2;
                 } else {
@@ -863,24 +776,24 @@ public class Estaciones extends javax.swing.JFrame {
                 result = obj.printShortestPath();
                 ruta = result.split(" ");
                 int x;
-                int y=0;
+                int y = 0;
                 for (int i = 0; i < ruta.length; i++) {
                     x = Integer.parseInt(ruta[i]);
-                    if(i<ruta.length-1){
-                        y = Integer.parseInt(ruta[i+1]);
+                    if (i < ruta.length - 1) {
+                        y = Integer.parseInt(ruta[i + 1]);
                     }
                     rutaFinal += estaciones[x - 1] + ", ";
-                    dist+=matCostos[x-1][y-1];
+                    dist += matCostos[x - 1][y - 1];
                 }
-                distancia=String.valueOf(dist);
+                distancia = String.valueOf(dist);
                 textDistancia.setText(distancia);
                 areaRuta.setText(rutaFinal);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Aun no se ha cargado el archivo");
         }
-        
+
     }//GEN-LAST:event_botonCalcularActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -921,44 +834,48 @@ public class Estaciones extends javax.swing.JFrame {
         textConfirmacion.setText("");
     }//GEN-LAST:event_BcancelarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void buttonVerMatrizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerMatrizActionPerformed
         JFrame vista = new JFrame();
-           vista.setVisible(true);
-           vista.setSize(600, 400);
-           vista.setLocationRelativeTo(null);
-           vista.add(areamatriz);  
+        vista.setVisible(true);
+        vista.setSize(600, 400);
+        vista.setLocationRelativeTo(null);
+        vista.add(areamatriz);
         areamatriz.setVisible(true);
-        areamatriz.setSize(600,400);
+        areamatriz.setSize(600, 400);
         areamatriz.setBackground(Color.WHITE);
-        //PanelGrafica.add(areamatriz)
-        int [][] matprueba = Algoritmo_Prim(matCostos);
-        areamatriz.setText(MostarMat(matprueba));
-    }//GEN-LAST:event_jButton4ActionPerformed
+        prim obj = new prim();
+        int[][] matCostosPrim = obj.AlgPrim(matCostos, estaciones, 0);
+        areamatriz.setText(MostarMat(matCostosPrim));
+    }//GEN-LAST:event_buttonVerMatrizActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       // areamatriz.setSize(0,0);
-       ArrayList<numero> xAnt = new ArrayList<>();
+    private void verGrafoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verGrafoActionPerformed
+        /*boolean band=true;
+        if(band){
+            PanelGrafica.repaint();
+            band=false;
+        }
+        ArrayList<numero> xAnt = new ArrayList<>();
         ArrayList<numero> yAnt = new ArrayList<>();
         numero p;
-        int x=0;
-        int y=0;
+        int x = 0;
+        int y = 0;
         VentanaGrafo v = new VentanaGrafo();
-        int[][]matCostosF= new int[matCostos.length][matCostos.length];
-        matCostosF =Algoritmo_Prim(matCostos);
+        prim obj = new prim();
+        int[][] matCostosF = obj.AlgPrim(matCostos, estaciones, 0);
         v.llenarVectorXyY(matCostosF);
-        Graphics g=getGraphics();
-         for (int i = 0; i < estaciones.length; i++) {
+        Graphics g = getGraphics();
+        for (int i = 0; i < estaciones.length; i++) {
             v.setNombre(estaciones[i]);
-            if(i==0){
-              v.setX(v.CalcularX(i));
-              v.setY(v.CalcularY(i));
-              v.setVeces(i);
-              v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostos,v.getxAnterior(),v.getyAnterior());
-              p = new numero(v.getX());
-              xAnt.add(p);
-              p = new numero(v.getY());
-              yAnt.add(p);
-            }else{
+            if (i == 0) {
+                v.setX(v.CalcularX(i));
+                v.setY(v.CalcularY(i));
+                v.setVeces(i);
+                v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
+                p = new numero(v.getX());
+                xAnt.add(p);
+                p = new numero(v.getY());
+                yAnt.add(p);
+            } else {
                 v.setxAnterior(v.getX());
                 v.setyAnterior(v.getY());
                 x = v.CalcularX(i);
@@ -966,14 +883,55 @@ public class Estaciones extends javax.swing.JFrame {
                 v.setX(x);
                 v.setY(y);
                 v.setVeces(i);
-                v.pintarCirculo(g,v.getX(),v.getY(),estaciones[i],matCostos,v.getxAnterior(),v.getyAnterior());
-                 p = new numero(x);
+                v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
+                p = new numero(x);
                 xAnt.add(p);
                 p = new numero(y);
                 yAnt.add(p);
-            }   
-         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+            }
+        }
+        band=true;
+        */
+    }//GEN-LAST:event_verGrafoActionPerformed
+
+    private void verGrafoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verGrafoMouseClicked
+        ArrayList<numero> xAnt = new ArrayList<>();
+        ArrayList<numero> yAnt = new ArrayList<>();
+        numero p;
+        int x = 0;
+        int y = 0;
+        VentanaGrafo v = new VentanaGrafo();
+        prim obj = new prim();
+        int[][] matCostosF = obj.AlgPrim(matCostos, estaciones, 0);
+        v.llenarVectorXyY(matCostosF);
+        Graphics g = getGraphics();
+        for (int i = 0; i < estaciones.length; i++) {
+            v.setNombre(estaciones[i]);
+            if (i == 0) {
+                v.setX(v.CalcularX(i));
+                v.setY(v.CalcularY(i));
+                v.setVeces(i);
+                v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
+                p = new numero(v.getX());
+                xAnt.add(p);
+                p = new numero(v.getY());
+                yAnt.add(p);
+            } else {
+                v.setxAnterior(v.getX());
+                v.setyAnterior(v.getY());
+                x = v.CalcularX(i);
+                y = v.CalcularY(i);
+                v.setX(x);
+                v.setY(y);
+                v.setVeces(i);
+                v.pintarCirculo(g, v.getX(), v.getY(), estaciones[i], matCostosF, v.getxAnterior(), v.getyAnterior());
+                p = new numero(x);
+                xAnt.add(p);
+                p = new numero(y);
+                yAnt.add(p);
+            }
+        }
+    }//GEN-LAST:event_verGrafoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1035,13 +993,13 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JTextArea areaRuta;
     private javax.swing.JButton bClear;
     private javax.swing.JButton botonCalcular;
+    private javax.swing.JButton buttonVerMatriz;
     private javax.swing.JLabel errorPass;
     private javax.swing.JLabel icono;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1068,5 +1026,6 @@ public class Estaciones extends javax.swing.JFrame {
     private javax.swing.JTextField textOrigen;
     private javax.swing.JPasswordField textpass;
     private javax.swing.JTextField textuser;
+    private javax.swing.JButton verGrafo;
     // End of variables declaration//GEN-END:variables
 }

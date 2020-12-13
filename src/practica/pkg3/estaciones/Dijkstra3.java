@@ -10,15 +10,15 @@ import java.util.*;
 class Dijkstra {
 
     //similar a los defines de C++
-    private final int MAX = 10005;  //maximo numero de vértices
-    private final int INF = 1 << 30;  //definimos un valor grande que represente la distancia infinita inicial, basta conque sea superior al maximo valor del peso en alguna de las aristas
+    private final int MAX = 10005;  
+    private final int INF = 1 << 30;  
 
-    private List< List< Node>> ady = new ArrayList< List< Node>>(); //lista de adyacencia
-    private int distancia[] = new int[MAX];          //distancia[ u ] distancia de vértice inicial a vértice con ID = u
-    private boolean visitado[] = new boolean[MAX];   //para vértices visitados
-    private PriorityQueue< Node> Q = new PriorityQueue<Node>(); //priority queue propia de Java, usamos el comparador definido para que el de menor valor este en el tope
-    private int nEstaciones;                                      //numero de vertices
-    private int previo[] = new int[MAX];              //para la impresion de caminos
+    private List< List< Node>> ady = new ArrayList< List< Node>>(); 
+    private int distancia[] = new int[MAX];          
+    private boolean visitado[] = new boolean[MAX];   
+    private PriorityQueue< Node> Q = new PriorityQueue<Node>();
+    private int nEstaciones;                                      
+    private int previo[] = new int[MAX];              
     private boolean dijkstraEjecutado;
     private int destino;
     private String salida = "";
@@ -34,7 +34,7 @@ class Dijkstra {
     Dijkstra(int V) {
         this.nEstaciones = V;
         for (int i = 0; i <= V; ++i) {
-            ady.add(new ArrayList<Node>()); //inicializamos lista de adyacencia
+            ady.add(new ArrayList<Node>()); 
         }
         dijkstraEjecutado = false;
     }
@@ -44,12 +44,12 @@ class Dijkstra {
 
         int first, second;
 
-        Node(int d, int p) {                          //constructor
+        Node(int d, int p) {                          
             this.first = d;
             this.second = p;
         }
 
-        public int compareTo(Node other) {              //es necesario definir un comparador para el correcto funcionamiento del PriorityQueue
+        public int compareTo(Node other) {             
             if (second > other.second) {
                 return 1;
             }
@@ -63,40 +63,39 @@ class Dijkstra {
     //función de inicialización
     private void init() {
         for (int i = 0; i <= nEstaciones; ++i) {
-            distancia[i] = INF;  //inicializamos todas las distancias con valor infinito
-            visitado[i] = false; //inicializamos todos los vértices como no visitados
-            previo[i] = -1;      //inicializamos el previo del vertice i con -1
+            distancia[i] = INF;  
+            visitado[i] = false; 
+            previo[i] = -1;      
         }
     }
 
     //Paso de relajacion
     private void relajacion(int actual, int adyacente, int peso) {
-        //Si la distancia del origen al vertice actual + peso de su arista es menor a la distancia del origen al vertice adyacente
         if (distancia[actual] + peso < distancia[adyacente]) {
-            distancia[adyacente] = distancia[actual] + peso;  //relajamos el vertice actualizando la distancia
-            previo[adyacente] = actual;                         //a su vez actualizamos el vertice previo
-            Q.add(new Node(adyacente, distancia[adyacente])); //agregamos adyacente a la cola de prioridad
+            distancia[adyacente] = distancia[actual] + peso; 
+            previo[adyacente] = actual; 
+            Q.add(new Node(adyacente, distancia[adyacente]));
         }
     }
 
     void dijkstra(int inicial) {
-        init(); //inicializamos nuestros arreglos
-        Q.add(new Node(inicial, 0)); //Insertamos el vértice inicial en la Cola de Prioridad
-        distancia[inicial] = 0;      //Este paso es importante, inicializamos la distancia del inicial como 0
+        init();
+        Q.add(new Node(inicial, 0)); 
+        distancia[inicial] = 0;
         int actual, adyacente, peso;
-        while (!Q.isEmpty()) {                   //Mientras cola no este vacia
-            actual = Q.element().first;            //Obtengo de la cola el nodo con menor peso, en un comienzo será el inicial
-            Q.remove();                           //Sacamos el elemento de la cola
+        while (!Q.isEmpty()) {             
+            actual = Q.element().first;           
+            Q.remove();
             if (visitado[actual]) {
-                continue; //Si el vértice actual ya fue visitado entonces sigo sacando elementos de la cola
+                continue;
             }
-            visitado[actual] = true;         //Marco como visitado el vértice actual
+            visitado[actual] = true;
 
-            for (int i = 0; i < ady.get(actual).size(); ++i) { //reviso sus adyacentes del vertice actual
-                adyacente = ady.get(actual).get(i).first;   //id del vertice adyacente
-                peso = ady.get(actual).get(i).second;        //peso de la arista que une actual con adyacente ( actual , adyacente )
-                if (!visitado[adyacente]) {        //si el vertice adyacente no fue visitado
-                    relajacion(actual, adyacente, peso); //realizamos el paso de relajacion
+            for (int i = 0; i < ady.get(actual).size(); ++i) {
+                adyacente = ady.get(actual).get(i).first;
+                peso = ady.get(actual).get(i).second;
+                if (!visitado[adyacente]) {
+                    relajacion(actual, adyacente, peso);
                 }
             }
         }
@@ -109,9 +108,9 @@ class Dijkstra {
     }
 
     void addEdge(int origen, int destino, int costos, boolean dirigido) {
-        ady.get(origen).add(new Node(destino, costos));    //grafo diridigo
+        ady.get(origen).add(new Node(destino, costos));
         if (!dirigido) {
-            ady.get(destino).add(new Node(origen, costos)); //no dirigido
+            ady.get(destino).add(new Node(origen, costos));
         }
     }
 
@@ -123,13 +122,12 @@ class Dijkstra {
         return salida;
     }
 
-    //Impresion del camino mas corto desde el vertice inicial y final ingresados
     String print(int destino) {
-        if (previo[destino] != -1) //si aun poseo un vertice previo
+        if (previo[destino] != -1)
         {
-            print(previo[destino]);  //recursivamente sigo explorando
+            print(previo[destino]);
         }
-        System.out.printf("%d ", destino + 1);        //terminada la recursion imprimo los vertices recorridos
+        System.out.printf("%d ", destino + 1);
         salida += (destino + 1) + " ";
         return salida;
     }
