@@ -45,6 +45,8 @@ public class Estaciones extends javax.swing.JFrame {
     public JPanel pin;
     public boolean banderita = true;
     JTextArea areamatriz = new JTextArea();
+    
+    
 
     public Estaciones() {
         initComponents();
@@ -468,6 +470,7 @@ public class Estaciones extends javax.swing.JFrame {
 
         Bcarga.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Bcarga.setText("Cargar Estaciones");
+        Bcarga.setEnabled(false);
         Bcarga.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BcargaMouseClicked(evt);
@@ -647,15 +650,15 @@ public class Estaciones extends javax.swing.JFrame {
         if (getEstaciones() != null) {
             areaListaE.setText(MostrarEstaciones(estaciones));
         } else {
-            areaListaE.setText("Favor solicite al administrador cargar las estaciones.\t\n gracias");
+            areaListaE.setText("Favor solicite al administrador \ncargar las estaciones.\t\nGracias");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BeditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BeditActionPerformed
         setUsuarios(JOptionPane.showInputDialog(null, "Ingrese el nuevo usuario"));
         setClave(JOptionPane.showInputDialog(null, "Ingrese la nueva clave"));
-        Bedit.setEnabled(false);
-        Bcarga.setEnabled(false);
+        //Bedit.setEnabled(false);
+        //Bcarga.setEnabled(false);
     }//GEN-LAST:event_BeditActionPerformed
 
     private void administrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_administrarMouseClicked
@@ -723,7 +726,7 @@ public class Estaciones extends javax.swing.JFrame {
         }
         CrearMatCostosyVecEstaciones(cadena);
 
-        Bedit.setEnabled(false);
+        //Bedit.setEnabled(false);
         Bcarga.setEnabled(false);
         Bok.setEnabled(true);
         Bcancelar.setEnabled(true);
@@ -816,7 +819,7 @@ public class Estaciones extends javax.swing.JFrame {
                         dist += matCostos[x - 1][y - 1];
                     }
                     distancia = String.valueOf(dist);
-                    textDistancia.setText(distancia);
+                    textDistancia.setText(distancia+" Km");
                     areaRuta.setText(rutaFinal);
                 }
 
@@ -854,6 +857,7 @@ public class Estaciones extends javax.swing.JFrame {
             textConfirmacion.setText("");
             Bok.setEnabled(false);
             Bcancelar.setEnabled(false);
+            Bcarga.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(null, "Algo Salio Mal\n \t"
                     + "favor revisar el Archivo y proceda a cargarlo nuevamente.\n \t"
