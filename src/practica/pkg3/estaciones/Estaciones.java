@@ -857,7 +857,7 @@ public class Estaciones extends javax.swing.JFrame {
             textConfirmacion.setText("");
             Bok.setEnabled(false);
             Bcancelar.setEnabled(false);
-            Bcarga.setEnabled(true);
+            Bcarga.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(null, "Algo Salio Mal\n \t"
                     + "favor revisar el Archivo y proceda a cargarlo nuevamente.\n \t"
