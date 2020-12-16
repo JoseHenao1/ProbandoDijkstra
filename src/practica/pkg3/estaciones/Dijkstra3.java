@@ -5,12 +5,12 @@
  */
 package practica.pkg3.estaciones;
 
+import com.logicayrepresentacion.grafos.practicaestaciones.Costo;
 import java.util.*;
 
 class Dijkstra {
 
-    //similar a los defines de C++
-    private final int MAX = 10005;  
+    private final int MAX = 1000;  
     private final int INF = 1 << 30;  
 
     private List< List< Node>> ady = new ArrayList< List< Node>>(); 
@@ -22,7 +22,22 @@ class Dijkstra {
     private boolean dijkstraEjecutado;
     private int destino;
     private String salida = "";
+    private int visitados[];
+    
+    private int [][]mat;
+    private final int[][] matrizAdy;
+    
+    public void addAdyancencia(int vi, int vj, int distancia) {
+        matrizAdy[vi][vj] = 1;
+        matrizAdy[vj][vi] = 1;
+        mat[vi][vj] = distancia;
+        mat[vj][vi] = distancia;
+    }
 
+    public void setMat(int[][] mat) {
+        this.mat = mat;
+    }
+    
     public int getDestino() {
         return destino;
     }
@@ -30,14 +45,80 @@ class Dijkstra {
     public void setDestino(int destino) {
         this.destino = destino;
     }
-
+    
+    /*Dijkstra(){
+        
+    }*/ 
+    
     Dijkstra(int V) {
+        this.nEstaciones = V;
+        matrizAdy = new int[V][V];
+        mat = new int[V][V];
+        dijkstraEjecutado = false;
+    }
+    
+    public /*Costo[]*/void dijkstra(int inicial) {
+        Costo[][] costos = new Costo[mat.length][mat.length];
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat.length; j++) {
+                if (matrizAdy[i][j] == 0) {
+                    costos[i][j] = Costo.getIndeterminado();
+                } else {
+                    costos[i][j] = new Costo(mat[i][j]);
+                }
+            }
+        }
+
+        visitados = new int[mat.length];
+        Costo[] costoMinimo = new Costo[mat.length];
+        for (int j = 0; j < mat.length; j++) {
+            costoMinimo[j] = costos[inicial][j];
+        }
+
+        visitados[inicial] = 1;
+        int indice = 0;
+        while (indice < mat.length - 1) {
+            int w = escogerMenor(costoMinimo, visitados);
+            visitados[w] = 1;
+            indice++;
+            for (int j = 0; j < visitados.length; j++) {
+                if (visitados[j] == 0) {
+                    Costo costoJ = costoMinimo[j];
+                    Costo distanciaWJ = costos[w][j];
+                    Costo costo2 = Costo.sumar(costoMinimo[w], distanciaWJ);
+                    costoMinimo[j] = Costo.menor(costoJ, costo2);
+                }
+            }
+        }
+        dijkstraEjecutado = true;
+        //return costoMinimo;
+
+    }
+    
+    private int escogerMenor(Costo[] costoMinimo, int[] visitados) {
+        int w = 0;
+        Costo minimow = costoMinimo[w];
+        for (int j = 0; j < visitados.length; j++) {
+            if (visitados[j] == 0) {
+                Costo posiblemenor = Costo.menor(minimow, costoMinimo[j]);
+                if (posiblemenor != minimow) {
+                    minimow = posiblemenor;
+                    w = j;
+                }
+            }
+        }
+        return w;
+    }
+ 
+    
+    
+    /*Dijkstra(int V) {
         this.nEstaciones = V;
         for (int i = 0; i <= V; ++i) {
             ady.add(new ArrayList<Node>()); 
         }
         dijkstraEjecutado = false;
-    }
+    }*/
 
     //En el caso de java usamos una clase que representara el pair de C++
     class Node implements Comparable<Node> {
@@ -61,7 +142,7 @@ class Dijkstra {
     };
 
     //función de inicialización
-    private void init() {
+    private void inicializar() {
         for (int i = 0; i <= nEstaciones; ++i) {
             distancia[i] = INF;  
             visitado[i] = false; 
@@ -78,7 +159,7 @@ class Dijkstra {
         }
     }
 
-    void dijkstra(int inicial) {
+    /*void dijkstra(int inicial) {
         init();
         Q.add(new Node(inicial, 0)); 
         distancia[inicial] = 0;
@@ -105,28 +186,33 @@ class Dijkstra {
             System.out.printf("Vertice %d , distancia mas corta = %d\n", i, distancia[i]);
         }
         dijkstraEjecutado = true;
-    }
+    }*/
 
-    void addEdge(int origen, int destino, int costos, boolean dirigido) {
-        ady.get(origen).add(new Node(destino, costos));
-        if (!dirigido) {
+    void agregarBorde(int origen, int destino, int costos/*, boolean dirigido*/) {
+        //ady.get(origen).add(new Node(destino, costos));
+        matrizAdy[origen][destino] = costos;
+        //setDestino(destino);
+        /*if (!dirigido) {
             ady.get(destino).add(new Node(origen, costos));
-        }
+        }*/
     }
 
-    String printShortestPath() {
+    String imprimirRutaCorta() {
         if (!dijkstraEjecutado) {
             return ("Es necesario ejecutar el algorithmo de Dijkstra antes de poder imprimir el camino mas corto");
         }
-        String salida = print(this.destino);
+        String salida = imprimir(this.destino);
         return salida;
     }
 
-    String print(int destino) {
-        if (previo[destino] != -1)
+    String imprimir(int destino) {
+        /*if (previo[destino] != -1)
         {
-            print(previo[destino]);
-        }
+            imprimir(previo[destino]);
+        }*/
+        System.out.println(destino);
+        System.out.println(previo[destino]+"si");
+        imprimir(previo[destino]);
         System.out.printf("%d ", destino + 1);
         salida += (destino + 1) + " ";
         return salida;

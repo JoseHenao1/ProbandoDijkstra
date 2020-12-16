@@ -45,8 +45,6 @@ public class Estaciones extends javax.swing.JFrame {
     public JPanel pin;
     public boolean banderita = true;
     JTextArea areamatriz = new JTextArea();
-    
-    
 
     public Estaciones() {
         initComponents();
@@ -119,7 +117,7 @@ public class Estaciones extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null,nEsta);
         //JOptionPane.showMessageDialog(null,MostrarEstaciones(lineas));
         String[] estacionesT;
-        String[] separador;
+        String[] separador = {"","",""};
         String eTemporal;
 
         estaTemp = Integer.parseInt(nEsta);
@@ -136,11 +134,14 @@ public class Estaciones extends javax.swing.JFrame {
         for (int i = 1; i < lineas.length; i++) {
             boolean esta = true;
             separador = lineas[i].split(",");
+            
             for (int j = 0; j < 2; j++) {
+               //JOptionPane.showMessageDialog(null,separador[j]);
                 eTemporal = separador[j];
+                
                 // JOptionPane.showMessageDialog(null,MostrarEstaciones(estacionesT));
-                for (int k = 0; k < estaTemp; k++) {
-                    if (eTemporal.equalsIgnoreCase(estacionesT[k])) {
+                for (String re : estacionesT) {
+                    if (eTemporal.equalsIgnoreCase(re)) {
                         esta = false;
                         break;
                     }
@@ -148,12 +149,17 @@ public class Estaciones extends javax.swing.JFrame {
                 if (esta) {
                     if (apuntador < estaTemp) {
                         estacionesT[apuntador] = eTemporal;
+                                               
+                        //JOptionPane.showMessageDialog(null,eTemporal + " "+apuntador+ " "+estaTemp);
                         apuntador++;
-
                     }
+               
 
                 }
-
+                if(noEsta(eTemporal,estacionesT)&& apuntador+1 == estaTemp){
+                  estacionesT[estacionesT.length-1] = eTemporal;
+                }
+              
             }
 
         }
@@ -176,8 +182,22 @@ public class Estaciones extends javax.swing.JFrame {
         }
         setMatTemp(mat);
         setEstTemp(estacionesT);
+        /*Dijkstra obj=new Dijkstra();
+        obj.setMat(mat);*/
 
     }
+    
+    public boolean noEsta(String o, String[] v){
+      boolean esta = true;
+        for (String re : v) {
+                    if (o.equalsIgnoreCase(re)) {
+                        esta = false;
+                        break;
+                    }
+                }
+        return esta;
+    }
+
 
     public static boolean isNumeric(String cadena) {
 
@@ -755,7 +775,7 @@ public class Estaciones extends javax.swing.JFrame {
                 for (int i = 0; i < estaciones.length; i++) {
                     for (int j = 0; j < estaciones.length; j++) {
                         if (matCostos[i][j] != 0) {
-                            obj.addEdge(i, j, matCostos[i][j], true);
+                            obj.agregarBorde(i, j, matCostos[i][j]);
                         }
                     }
                 }
@@ -806,8 +826,8 @@ public class Estaciones extends javax.swing.JFrame {
                 obj.dijkstra(orig);
                 obj.setDestino(dest);
                 if (band2) {
-                    result = obj.printShortestPath();
-                    ruta = result.split(" ");
+                    result = obj.imprimirRutaCorta();//string
+                    ruta = result.split(" ");//vector de string
                     int x;
                     int y = 0;
                     for (int i = 0; i < ruta.length; i++) {
@@ -819,7 +839,7 @@ public class Estaciones extends javax.swing.JFrame {
                         dist += matCostos[x - 1][y - 1];
                     }
                     distancia = String.valueOf(dist);
-                    textDistancia.setText(distancia+" Km");
+                    textDistancia.setText(distancia + " Km");
                     areaRuta.setText(rutaFinal);
                 }
 

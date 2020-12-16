@@ -5,10 +5,7 @@
  */
 package practica.pkg3.estaciones;
 
-/**
- *
- * @author Liceo_2
- */
+
 public class prim {
 
     public int[][] AlgPrim(int[][] Matriz, String[] estaciones, int n) {  //Llega la matriz a la que le vamos a aplicar el algoritmo
