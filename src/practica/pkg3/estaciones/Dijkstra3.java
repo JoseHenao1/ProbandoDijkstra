@@ -54,7 +54,7 @@ class Dijkstra {
         matCosto = new int[V][V];
         this.visitados=new int[V+1];
         this.distancia=new int[V+1];
-        this.previo=new int[V+1];
+        this.previo=new int[V];
         dijkstraEjecutado = false;
     }
     
@@ -82,7 +82,9 @@ class Dijkstra {
         while (indice < matCosto.length - 1) {
             int w = escogerMenor(costoMinimo, visitados);
             visitados[w] = 1;
+            previo[w]=indice+1;
             indice++;
+
             for (int j = 0; j < visitados.length; j++) {
                 if (visitados[j] == 0) {
                     Costo costoJ = costoMinimo[j];
@@ -92,7 +94,7 @@ class Dijkstra {
                 }
             }
         }
-        for (int i = 0; i < visitados.length; i++) {
+        for (int i = 0; i < previo.length; i++) {
             System.out.println(previo[i]);
         }
         dijkstraEjecutado = true;
@@ -102,8 +104,8 @@ class Dijkstra {
     
     private int escogerMenor(Costo[] costoMinimo, int[] visitados) {
         int w = 0;
+        Costo minimow = costoMinimo[w];
         for (int j = 0; j < visitados.length; j++) {
-             Costo minimow = costoMinimo[w];
             if (visitados[j] == 0) {
                 Costo posiblemenor = Costo.menor(minimow, costoMinimo[j]);
                 if (posiblemenor != minimow) {
@@ -112,9 +114,7 @@ class Dijkstra {
                 }
                 
             }
-            previo[w]=visitados[j];
         }
-        System.out.println(w+"verguitas");
         return w;
     }
  
@@ -218,8 +218,8 @@ class Dijkstra {
         {
             imprimir(previo[destino]);
         }
-        System.out.printf("%d ", destino + 1);
-        salida += (destino + 1) + " ";
+        System.out.printf("%d ", destino);
+        salida += (destino+1) + " ";
         return salida;
     }
 }
