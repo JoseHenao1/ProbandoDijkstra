@@ -490,7 +490,6 @@ public class Estaciones extends javax.swing.JFrame {
 
         Bcarga.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         Bcarga.setText("Cargar Estaciones");
-        Bcarga.setEnabled(false);
         Bcarga.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BcargaMouseClicked(evt);

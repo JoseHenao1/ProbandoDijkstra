@@ -10,33 +10,31 @@ import java.util.*;
 
 class Dijkstra {
 
-    private final int MAX = 1000;  
+    //private final int MAX = 1000;  
     private final int INF = 1 << 30;  
 
-    private List< List< Node>> ady = new ArrayList< List< Node>>(); 
-    private int distancia[] = new int[MAX];          
-    private boolean visitado[] = new boolean[MAX];   
-    private PriorityQueue< Node> Q = new PriorityQueue<Node>();
+   // private List< List< Node>> ady = new ArrayList< List< Node>>(); 
+    private int distancia[] /*= new int[MAX]*/;          
+    //private boolean visitado[] /*= new boolean[MAX]*/;   
+    //private PriorityQueue< Node> Q = new PriorityQueue<Node>();
     private int nEstaciones;                                      
-    private int previo[] = new int[MAX];              
+    private int previo[]/* = new int[MAX]*/;              
     private boolean dijkstraEjecutado;
     private int destino;
     private String salida = "";
     private int visitados[];
     
-    private int [][]mat;
+    private int [][]matCosto;
     private final int[][] matrizAdy;
     
-    public void addAdyancencia(int vi, int vj, int distancia) {
+    public void agregarBorde(int vi, int vj, int distancia) {
         matrizAdy[vi][vj] = 1;
-        matrizAdy[vj][vi] = 1;
-        mat[vi][vj] = distancia;
-        mat[vj][vi] = distancia;
+        matCosto[vi][vj] = distancia;
     }
 
-    public void setMat(int[][] mat) {
-        this.mat = mat;
-    }
+    /*public void setMat(int[][] mat) {
+        this.matCosto = mat;
+    }*/
     
     public int getDestino() {
         return destino;
@@ -53,31 +51,35 @@ class Dijkstra {
     Dijkstra(int V) {
         this.nEstaciones = V;
         matrizAdy = new int[V][V];
-        mat = new int[V][V];
+        matCosto = new int[V][V];
+        this.visitados=new int[V+1];
+        this.distancia=new int[V+1];
+        this.previo=new int[V+1];
         dijkstraEjecutado = false;
     }
     
     public /*Costo[]*/void dijkstra(int inicial) {
-        Costo[][] costos = new Costo[mat.length][mat.length];
-        for (int i = 0; i < mat.length; i++) {
-            for (int j = 0; j < mat.length; j++) {
+        Costo[][] costos = new Costo[matCosto.length][matCosto.length];
+        for (int i = 0; i < matCosto.length; i++) {
+            for (int j = 0; j < matCosto.length; j++) {
                 if (matrizAdy[i][j] == 0) {
                     costos[i][j] = Costo.getIndeterminado();
                 } else {
-                    costos[i][j] = new Costo(mat[i][j]);
+                    costos[i][j] = new Costo(matCosto[i][j]);
                 }
             }
         }
 
-        visitados = new int[mat.length];
-        Costo[] costoMinimo = new Costo[mat.length];
-        for (int j = 0; j < mat.length; j++) {
+        visitados = new int[matCosto.length];
+        Costo[] costoMinimo = new Costo[matCosto.length];
+        for (int j = 0; j < matCosto.length; j++) {
+            previo[j]=-1;
             costoMinimo[j] = costos[inicial][j];
         }
 
         visitados[inicial] = 1;
         int indice = 0;
-        while (indice < mat.length - 1) {
+        while (indice < matCosto.length - 1) {
             int w = escogerMenor(costoMinimo, visitados);
             visitados[w] = 1;
             indice++;
@@ -90,6 +92,9 @@ class Dijkstra {
                 }
             }
         }
+        for (int i = 0; i < visitados.length; i++) {
+            System.out.println(previo[i]);
+        }
         dijkstraEjecutado = true;
         //return costoMinimo;
 
@@ -97,16 +102,19 @@ class Dijkstra {
     
     private int escogerMenor(Costo[] costoMinimo, int[] visitados) {
         int w = 0;
-        Costo minimow = costoMinimo[w];
         for (int j = 0; j < visitados.length; j++) {
+             Costo minimow = costoMinimo[w];
             if (visitados[j] == 0) {
                 Costo posiblemenor = Costo.menor(minimow, costoMinimo[j]);
                 if (posiblemenor != minimow) {
                     minimow = posiblemenor;
                     w = j;
                 }
+                
             }
+            previo[w]=visitados[j];
         }
+        System.out.println(w+"verguitas");
         return w;
     }
  
@@ -121,7 +129,7 @@ class Dijkstra {
     }*/
 
     //En el caso de java usamos una clase que representara el pair de C++
-    class Node implements Comparable<Node> {
+    /*class Node implements Comparable<Node> {
 
         int first, second;
 
@@ -139,25 +147,25 @@ class Dijkstra {
             }
             return -1;
         }
-    };
+    };*/
 
     //función de inicialización
-    private void inicializar() {
+    /*private void inicializar() {
         for (int i = 0; i <= nEstaciones; ++i) {
             distancia[i] = INF;  
             visitado[i] = false; 
             previo[i] = -1;      
         }
-    }
+    }*/
 
     //Paso de relajacion
-    private void relajacion(int actual, int adyacente, int peso) {
+    /*private void relajacion(int actual, int adyacente, int peso) {
         if (distancia[actual] + peso < distancia[adyacente]) {
             distancia[adyacente] = distancia[actual] + peso; 
             previo[adyacente] = actual; 
             Q.add(new Node(adyacente, distancia[adyacente]));
         }
-    }
+    }*/
 
     /*void dijkstra(int inicial) {
         init();
@@ -188,14 +196,14 @@ class Dijkstra {
         dijkstraEjecutado = true;
     }*/
 
-    void agregarBorde(int origen, int destino, int costos/*, boolean dirigido*/) {
+    /*void agregarBorde(int origen, int destino, int costos, boolean dirigido) {
         //ady.get(origen).add(new Node(destino, costos));
         matrizAdy[origen][destino] = costos;
         //setDestino(destino);
-        /*if (!dirigido) {
+        if (!dirigido) {
             ady.get(destino).add(new Node(origen, costos));
-        }*/
-    }
+        }
+    }*/
 
     String imprimirRutaCorta() {
         if (!dijkstraEjecutado) {
@@ -206,13 +214,10 @@ class Dijkstra {
     }
 
     String imprimir(int destino) {
-        /*if (previo[destino] != -1)
+        if (previo[destino] != -1)
         {
             imprimir(previo[destino]);
-        }*/
-        System.out.println(destino);
-        System.out.println(previo[destino]+"si");
-        imprimir(previo[destino]);
+        }
         System.out.printf("%d ", destino + 1);
         salida += (destino + 1) + " ";
         return salida;
