@@ -76,15 +76,13 @@ class Dijkstra {
             previo[j]=-1;
             costoMinimo[j] = costos[inicial][j];
         }
-
         visitados[inicial] = 1;
         int indice = 0;
         while (indice < matCosto.length - 1) {
-            int w = escogerMenor(costoMinimo, visitados);
+            
+            int w = escogerMenor(costoMinimo, visitados);     
             visitados[w] = 1;
-            previo[w]=indice+1;
             indice++;
-
             for (int j = 0; j < visitados.length; j++) {
                 if (visitados[j] == 0) {
                     Costo costoJ = costoMinimo[j];
@@ -94,9 +92,6 @@ class Dijkstra {
                 }
             }
         }
-        for (int i = 0; i < previo.length; i++) {
-            System.out.println(previo[i]);
-        }
         dijkstraEjecutado = true;
         //return costoMinimo;
 
@@ -104,8 +99,8 @@ class Dijkstra {
     
     private int escogerMenor(Costo[] costoMinimo, int[] visitados) {
         int w = 0;
-        Costo minimow = costoMinimo[w];
         for (int j = 0; j < visitados.length; j++) {
+            Costo minimow = costoMinimo[w];
             if (visitados[j] == 0) {
                 Costo posiblemenor = Costo.menor(minimow, costoMinimo[j]);
                 if (posiblemenor != minimow) {
