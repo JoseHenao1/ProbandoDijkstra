@@ -26,6 +26,7 @@ class Dijkstra {
     
     private int [][]matCosto;
     private final int[][] matrizAdy;
+    Costo[] costoMinimo;
     
     public void agregarBorde(int vi, int vj, int distancia) {
         matrizAdy[vi][vj] = 1;
@@ -58,12 +59,12 @@ class Dijkstra {
         dijkstraEjecutado = false;
     }
     
-    public /*Costo[]*/void dijkstra(int inicial) {
+    public Costo[] dijkstra(int inicial) {
         Costo[][] costos = new Costo[matCosto.length][matCosto.length];
         for (int i = 0; i < matCosto.length; i++) {
             for (int j = 0; j < matCosto.length; j++) {
                 if (matrizAdy[i][j] == 0) {
-                    costos[i][j] = Costo.getIndeterminado();
+                    costos[i][j] = new Costo();
                 } else {
                     costos[i][j] = new Costo(matCosto[i][j]);
                 }
@@ -71,7 +72,7 @@ class Dijkstra {
         }
 
         visitados = new int[matCosto.length];
-        Costo[] costoMinimo = new Costo[matCosto.length];
+        costoMinimo = new Costo[matCosto.length];
         for (int j = 0; j < matCosto.length; j++) {
             previo[j]=-1;
             costoMinimo[j] = costos[inicial][j];
@@ -80,7 +81,7 @@ class Dijkstra {
         int indice = 0;
         while (indice < matCosto.length - 1) {
             
-            int w = escogerMenor(costoMinimo, visitados);     
+            int w = escogerMenor(costoMinimo, visitados);
             visitados[w] = 1;
             indice++;
             for (int j = 0; j < visitados.length; j++) {
@@ -89,18 +90,26 @@ class Dijkstra {
                     Costo distanciaWJ = costos[w][j];
                     Costo costo2 = Costo.sumar(costoMinimo[w], distanciaWJ);
                     costoMinimo[j] = Costo.menor(costoJ, costo2);
+                    previo[j]=w;
                 }
             }
         }
+        for (int i = 0; i < previo.length; i++) {
+            System.out.print(previo[i]+"\t");
+        }
+        for (int i = 0; i < costoMinimo.length; i++) {
+            System.out.print(costoMinimo[i]+"\t");
+        }
         dijkstraEjecutado = true;
-        //return costoMinimo;
+        return costoMinimo;
 
     }
     
     private int escogerMenor(Costo[] costoMinimo, int[] visitados) {
         int w = 0;
+        Costo minimow = costoMinimo[w];
         for (int j = 0; j < visitados.length; j++) {
-            Costo minimow = costoMinimo[w];
+            
             if (visitados[j] == 0) {
                 Costo posiblemenor = Costo.menor(minimow, costoMinimo[j]);
                 if (posiblemenor != minimow) {
@@ -108,7 +117,7 @@ class Dijkstra {
                     w = j;
                 }
                 
-            }
+            }          
         }
         return w;
     }

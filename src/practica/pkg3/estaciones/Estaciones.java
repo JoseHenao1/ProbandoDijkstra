@@ -838,7 +838,7 @@ public class Estaciones extends javax.swing.JFrame {
                         dist += matCostos[x - 1][y - 1];
                     }
                     distancia = String.valueOf(dist);
-                    textDistancia.setText(distancia + " Km");
+                    textDistancia.setText(obj.costoMinimo[dest]+" Km");
                     areaRuta.setText(rutaFinal);
                 }
 
